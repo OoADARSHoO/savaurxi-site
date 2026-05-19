@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAVAURXI | Digital Infrastructure</title>
+    
+    <!-- Fonts: Syncopate for futuristic headers, Inter for clean tech body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS VARIABLES */
+        :root {
+            --black: #000000;
+            --graphite: #0D0D0D;
+            --vader-red: #FF2D2D;
+            --crimson: #8B0000;
+            --text-white: #FFFFFF;
+            --text-gray: #A0A0A0;
+            --border-dark: #222222;
+        }
+
+        /* RESET & BASE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--black);
+            color: var(--text-white);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Syncopate', sans-serif;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        /* TYPOGRAPHY */
+        .section-title {
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 1.5rem;
+            color: var(--text-white);
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .section-subtitle {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--text-gray);
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto 4rem auto;
+            font-weight: 300;
+        }
+
+        /* BUTTONS */
+        .cta-btn {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: transparent;
+            color: var(--text-white);
+            font-family: 'Syncopate', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 2px;
+            border: 1px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .cta-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--vader-red);
+            z-index: -1;
+            transform: scaleY(0);
+            transform-origin: bottom;
+            transition: transform 0.4s ease;
+        }
+
+        .cta-btn:hover {
+            border-color: var(--vader-red);
+            box-shadow: 0 0 20px rgba(255, 45, 45, 0.4);
+            color: var(--black);
+        }
+
+        .cta-btn:hover::before {
+            transform: scaleY(1);
+        }
+
+        /* BACKGROUND EFFECTS */
+        .grid-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: 
+                linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .ambient-glow {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vw; height: 80vh;
+            background: radial-gradient(circle, rgba(255,45,45,0.08) 0%, rgba(0,0,0,0) 70%);
+            z-index: -1;
+            pointer-events: none;
+            animation: pulse-glow 8s infinite alternate;
+        }
+
+        /* ANIMATIONS */
+        @keyframes pulse-glow {
+            0% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.9); }
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes energy-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* SECTIONS COMMON */
+        section {
+            padding: 8rem 5%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* SCROLL REVEAL CLASSES */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            justify-content: center;
+            padding-top: 0;
+        }
+
+        .hero-logo-abstract {
+            width: 80px;
+            height: 80px;
+            border: 2px solid var(--vader-red);
+            transform: rotate(45deg);
+            margin: 0 auto 3rem auto;
+            position: relative;
+            box-shadow: 0 0 30px rgba(255, 45, 45, 0.5), inset 0 0 20px rgba(255, 45, 45, 0.2);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .hero-logo-abstract::after {
+            content: '';
+            position: absolute;
+            top: -10px; left: -10px; right: -10px; bottom: -10px;
+            border: 1px solid rgba(255, 45, 45, 0.3);
+            animation: energy-spin 10s linear infinite;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 4.5rem);
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--text-gray);
+            max-width: 700px;
+            margin: 0 auto 3rem auto;
+            line-height: 1.6;
+        }
+
+        /* --- SECTION 2: WHAT WE DO --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 2rem;
+        }
+
+        .service-card {
+            background: rgba(13, 13, 13, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-dark);
+            padding: 3rem 2rem;
+            text-align: left;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 2px; height: 0%;
+            background: var(--vader-red);
+            transition: height 0.4s ease;
+        }
+
+        .service-card:hover {
+            border-color: rgba(255, 45, 45, 0.3);
+            box-shadow: 0 10px 40px rgba(255, 45, 45, 0.05);
+            transform: translateY(-5px);
+        }
+
+        .service-card:hover::before {
+            height: 100%;
+        }
+
+        .service-icon {
+            color: var(--vader-red);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 10px rgba(255, 45, 45, 0.4);
+        }
+
+        .service-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--text-white);
+        }
+
+        .service-card p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* --- SECTION 3: FOR CREATORS --- */
+        .creators-section {
+            background: linear-gradient(to bottom, var(--black), var(--graphite), var(--black));
+            border-top: 1px solid rgba(255,45,45,0.1);
+            border-bottom: 1px solid rgba(255,45,45,0.1);
+        }
+
+        .creators-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .highlight-text {
+            color: var(--vader-red);
+            font-style: italic;
+        }
+
+        .tag-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 3rem 0;
+        }
+
+        .tag {
+            padding: 0.5rem 1.5rem;
+            border: 1px solid var(--border-dark);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            font-family: 'Syncopate', sans-serif;
+            background: rgba(0,0,0,0.5);
+        }
+
+        /* --- SECTION 4: THE SAVAURXI SYSTEM --- */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 4rem auto 0;
+            text-align: left;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: var(--border-dark);
+        }
+
+        .timeline-step {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 4rem;
+        }
+
+        .timeline-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-number {
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-family: 'Syncopate', sans-serif;
+            color: var(--vader-red);
+            font-weight: 700;
+            background: var(--black);
+            padding-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255,45,45,0.3);
+        }
+
+        .timeline-step h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* --- SECTION 5: WHY SAVAURXI --- */
+        .why-section {
+            text-align: center;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1000px;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .why-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .why-item h4 {
+            color: var(--vader-red);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* --- SECTION 6: CONTACT --- */
+        .contact-section {
+            min-height: 60vh;
+            justify-content: center;
+            background: radial-gradient(circle at bottom, rgba(255,45,45,0.05) 0%, var(--black) 50%);
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px; height: 60px;
+            border: 1px solid var(--border-dark);
+            border-radius: 50%;
+            color: var(--text-white);
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            background: var(--graphite);
+        }
+
+        .social-btn:hover {
+            border-color: var(--vader-red);
+            box-shadow: 0 0 20px rgba(255, 45, 45, 0.3);
+            color: var(--vader-red);
+            transform: translateY(-5px);
+        }
+
+        .email-placeholder {
+            margin-top: 3rem;
+            font-family: 'Syncopate', sans-serif;
+            color: var(--text-gray);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Background Elements -->
+    <div class="grid-bg"></div>
+    <div class="ambient-glow"></div>
+
+    <!-- HERO SECTION -->
+    <section class="hero reveal">
+        <div class="hero-logo-abstract"></div>
+        <h1>Digital Infrastructure<br>For The Modern Internet</h1>
+        <p>We build, launch, market, and scale digital products engineered to generate attention, authority, and revenue.</p>
+        <a href="#contact" class="cta-btn">GET IN TOUCH</a>
+    </section>
+
+    <!-- SECTION 2: WHAT WE DO -->
+    <section class="reveal">
+        <h2 class="section-title">Behind The Scenes</h2>
+        <p class="section-subtitle">Operating as the hidden infrastructure layer for elite digital businesses.</p>
+        
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">✦</div>
+                <h3>Digital Product Development</h3>
+                <p>We transform isolated knowledge into scalable, high-leverage digital assets.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">⎔</div>
+                <h3>Funnel Systems</h3>
+                <p>High-converting infrastructures engineered specifically for modern audience psychology.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">◈</div>
+                <h3>Creator Monetization</h3>
+                <p>We help creators transition from pure attention to highly predictable revenue ecosystems.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">◬</div>
+                <h3>Marketing & Distribution</h3>
+                <p>Precision-engineered campaigns architected for maximum scale and conversion.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">▱</div>
+                <h3>Brand Positioning</h3>
+                <p>We construct undeniable authority systems designed to completely dominate niches.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: FOR CREATORS -->
+    <section class="creators-section reveal">
+        <div class="creators-content">
+            <h2 class="section-title">Already Have An Audience?</h2>
+            <p class="section-subtitle" style="margin-bottom: 2rem;">If you possess an audience, raw expertise, or a targeted niche — we deploy and manage the systems operating entirely in the background.</p>
+            
+            <div class="tag-grid">
+                <span class="tag">Product Creation</span>
+                <span class="tag">Funnel Building</span>
+                <span class="tag">Sales Systems</span>
+                <span class="tag">Marketing</span>
+                <span class="tag">Distribution</span>
+                <span class="tag">Automation</span>
+            </div>
+
+            <h3 style="margin-bottom: 3rem; font-size: 1.2rem; color: var(--text-white);">
+                "You focus on influence. <span class="highlight-text">We engineer the infrastructure.</span>"
+            </h3>
+            
+            <a href="#contact" class="cta-btn">WORK WITH US</a>
+        </div>
+    </section>
+
+    <!-- SECTION 4: THE SAVAURXI SYSTEM -->
+    <section class="reveal">
+        <h2 class="section-title">The Savaurxi System</h2>
+        <p class="section-subtitle">A calculated, multi-stage protocol for digital dominance.</p>
+
+        <div class="timeline">
+            <div class="timeline-step">
+                <div class="step-number">01</div>
+                <h3>Strategy</h3>
+                <p style="color: var(--text-gray); font-size: 0.95rem;">Auditing the market landscape and mapping the operational blueprint.</p>
+            </div>
+            <div class="timeline-step">
+                <div class="step-number">02</div>
+                <h3>Product Engineering</h3>
+                <p style="color: var(--text-gray); font-size: 0.95rem;">Forging high-value digital assets designed for immediate market fit.</p>
+            </div>
+            <div class="timeline-step">
+                <div class="step-number">03</div>
+                <h3>Funnel Architecture</h3>
+                <p style="color: var(--text-gray); font-size: 0.95rem;">Building the conversion mechanism to seamlessly capture and close.</p>
+            </div>
+            <div class="timeline-step">
+                <div class="step-number">04</div>
+                <h3>Audience Conversion</h3>
+                <p style="color: var(--text-gray); font-size: 0.95rem;">Deploying psychological frameworks that turn passive views into equity.</p>
+            </div>
+            <div class="timeline-step">
+                <div class="step-number">05</div>
+                <h3>Scaling Infrastructure</h3>
+                <p style="color: var(--text-gray); font-size: 0.95rem;">Automating the entire ecosystem for ruthless, unchecked growth.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: WHY SAVAURXI -->
+    <section class="why-section reveal">
+        <h2 class="section-title" style="font-size: clamp(1.5rem, 3vw, 2.5rem);">Built Like A Tech Company.<br>Operated Like A Media Empire.</h2>
+        <p class="section-subtitle">We do not guess. Every asset, every word, and every pixel is deployed with calculating precision to maximize conversion optimization and command market positioning.</p>
+
+        <div class="why-grid">
+            <div class="why-item">
+                <h4>Precision</h4>
+                <p style="color: var(--text-gray); font-size: 0.9rem;">Eliminating friction points through rigorous data analysis.</p>
+            </div>
+            <div class="why-item">
+                <h4>Scalability</h4>
+                <p style="color: var(--text-gray); font-size: 0.9rem;">Systems engineered to handle exponential volume without breaking.</p>
+            </div>
+            <div class="why-item">
+                <h4>Psychology</h4>
+                <p style="color: var(--text-gray); font-size: 0.9rem;">Leveraging deep human behavioral triggers to drive action.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: CONTACT -->
+    <section id="contact" class="contact-section reveal">
+        <h2 class="section-title">Initiate Protocol</h2>
+        <p class="section-subtitle" style="margin-bottom: 0;">Interested in building with SAVAURXI?</p>
+
+        <div class="contact-links">
+            <!-- Using simple unicode icons, replace with SVG/FontAwesome as needed -->
+            <a href="#" class="social-btn" title="Instagram">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <a href="#" class="social-btn" title="WhatsApp">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            </a>
+        </div>
+
+        <div class="email-placeholder">
+            SECURE.COMMUNICATIONS@SAVAURXI.TECH
+        </div>
+    </section>
+
+    <!-- JAVASCRIPT FOR SCROLL REVEAL (Cinematic Fades) -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const reveals = document.querySelectorAll(".reveal");
+
+            const revealOnScroll = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+                        // Optional: Stop observing once revealed
+                        // observer.unobserve(entry.target); 
+                    }
+                });
+            }, {
+                root: null,
+                threshold: 0.15, // Trigger when 15% of the element is visible
+                rootMargin: "0px"
+            });
+
+            reveals.forEach(reveal => {
+                revealOnScroll.observe(reveal);
+            });
+            
+            // Immediately trigger for elements already in viewport on load
+            setTimeout(() => {
+                reveals[0].classList.add("active");
+            }, 100);
+        });
+    </script>
+</body>
+</html>
