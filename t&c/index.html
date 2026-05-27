@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms & Conditions | SAVAURXI</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --surface2: #161616;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.13);
+    --accent: #c8ff00;
+    --accent2: #00ffc8;
+    --red: #ff4444;
+    --red-dim: rgba(255,68,68,0.08);
+    --red-border: rgba(255,68,68,0.25);
+    --text: #f0ede6;
+    --text-muted: #888880;
+    --text-dim: #555550;
+    --mono: 'DM Mono', monospace;
+    --display: 'Syne', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--display);
+    font-size: 16px;
+    line-height: 1.75;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+  }
+
+  .nav-logo {
+    font-family: var(--display);
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    color: var(--text);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-badge {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    border: 1px solid var(--border2);
+    padding: 0.3rem 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .hero {
+    position: relative;
+    padding: 6rem 2.5rem 4rem;
+    max-width: 980px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: 'TERMS';
+    position: absolute;
+    right: -1rem;
+    top: 2rem;
+    font-size: clamp(5rem, 14vw, 10rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: rgba(255,255,255,0.02);
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 2rem;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 em { font-style: normal; color: var(--accent); }
+
+  .hero-meta {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+
+  .meta-item {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  .meta-item strong {
+    display: block;
+    color: var(--text-muted);
+    margin-bottom: 0.15rem;
+  }
+
+  /* WARNING BANNER */
+  .warning-banner {
+    max-width: 980px;
+    margin: 0 auto 0;
+    padding: 0 2.5rem;
+  }
+
+  .warning-inner {
+    border: 1px solid var(--red-border);
+    background: var(--red-dim);
+    padding: 1rem 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .warning-icon {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--red);
+    white-space: nowrap;
+    padding-top: 0.1rem;
+    letter-spacing: 0.05em;
+  }
+
+  .warning-inner p {
+    font-size: 0.83rem;
+    color: #cc8888;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .warning-inner strong { color: #ff9999; }
+
+  .layout {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 6rem;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 5rem;
+  }
+
+  .sidebar-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .sidebar-nav {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .sidebar-nav a {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 0.4rem 0.75rem;
+    border-left: 1px solid var(--border);
+    transition: color 0.15s, border-color 0.15s;
+    letter-spacing: 0.01em;
+    line-height: 1.4;
+  }
+
+  .sidebar-nav a:hover {
+    color: var(--text);
+    border-left-color: var(--accent);
+  }
+
+  .content { min-width: 0; }
+
+  .section {
+    margin-bottom: 4rem;
+    padding-top: 1rem;
+  }
+
+  .section-number {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+    color: var(--text);
+  }
+
+  p {
+    font-size: 0.92rem;
+    color: #b0ada6;
+    line-height: 1.85;
+    margin-bottom: 1rem;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, var(--border2), transparent);
+    margin: 3rem 0;
+  }
+
+  /* CALLOUT */
+  .callout {
+    border-left: 2px solid var(--accent);
+    padding: 1rem 1.25rem;
+    background: rgba(200,255,0,0.03);
+    margin: 1.5rem 0;
+  }
+
+  .callout p { margin: 0; font-size: 0.88rem; color: var(--text-muted); }
+  .callout strong { color: var(--accent); }
+
+  /* RED CALLOUT — liability / no-guarantee blocks */
+  .callout-red {
+    border-left: 2px solid var(--red);
+    padding: 1rem 1.25rem;
+    background: var(--red-dim);
+    margin: 1.5rem 0;
+  }
+
+  .callout-red p { margin: 0; font-size: 0.88rem; color: #cc8888; line-height: 1.7; }
+  .callout-red strong { color: #ff9999; }
+
+  /* ITEM LIST */
+  .item-list {
+    list-style: none;
+    margin: 1rem 0 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .item-list li {
+    font-size: 0.88rem;
+    color: #a0a09a;
+    padding-left: 1.4rem;
+    position: relative;
+    line-height: 1.7;
+  }
+
+  .item-list li::before {
+    content: '◆';
+    position: absolute;
+    left: 0;
+    font-size: 0.45rem;
+    color: var(--accent);
+    top: 0.45rem;
+  }
+
+  /* TAGS */
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.65rem;
+    border: 1px solid var(--border2);
+    color: var(--text-muted);
+    background: var(--surface);
+  }
+
+  /* DATA TABLE */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.82rem;
+  }
+
+  .data-table th {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-align: left;
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--border2);
+    background: var(--surface2);
+  }
+
+  .data-table td {
+    padding: 0.75rem 1rem;
+    color: #a0a09a;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table td:first-child { color: var(--text); font-weight: 500; }
+
+  /* AGREEMENT BOX */
+  .agreement-box {
+    border: 1px solid var(--border2);
+    padding: 2rem;
+    background: var(--surface);
+    margin-top: 2rem;
+    text-align: center;
+  }
+
+  .agreement-box p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .agreement-box strong { color: var(--text); }
+
+  /* CONTACT BLOCK */
+  .contact-block {
+    border: 1px solid var(--border2);
+    padding: 2rem;
+    background: var(--surface);
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .contact-info p { margin: 0; font-size: 0.88rem; }
+
+  .contact-info strong {
+    color: var(--text);
+    display: block;
+    font-size: 0.75rem;
+    font-family: var(--mono);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.3rem;
+  }
+
+  .contact-email {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    color: var(--accent2);
+    text-decoration: none;
+  }
+
+  .contact-email:hover { text-decoration: underline; }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 2.5rem;
+    max-width: 980px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-logo {
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  .footer-note {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+  }
+
+  @media (max-width: 720px) {
+    .layout { grid-template-columns: 1fr; gap: 2rem; }
+    .sidebar { position: static; }
+    .hero, .layout, .warning-banner { padding-left: 1.25rem; padding-right: 1.25rem; }
+    nav { padding: 1rem 1.25rem; }
+    footer { padding: 1.5rem 1.25rem; }
+    .contact-block { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="https://savaurxi.tech" class="nav-logo">SAUR<span>XI</span></a>
+  <span class="nav-badge">Legal Document</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">Legal Framework</div>
+  <h1>Terms &amp; <em>Conditions</em></h1>
+  <p style="max-width:580px; font-size:0.95rem; color:var(--text-muted);">
+    By accessing our website, purchasing any product, or engaging our services, you agree to be bound by these Terms in full. Please read carefully before proceeding.
+  </p>
+  <div class="hero-meta">
+    <div class="meta-item"><strong>Effective Date</strong> [INSERT DATE]</div>
+    <div class="meta-item"><strong>Last Updated</strong> [INSERT DATE]</div>
+    <div class="meta-item"><strong>Entity</strong> SAVAURXI · savaurxi.tech</div>
+    <div class="meta-item"><strong>Jurisdiction</strong> India</div>
+  </div>
+</div>
+
+<div class="warning-banner">
+  <div class="warning-inner">
+    <span class="warning-icon">⚠ NOTICE</span>
+    <p><strong>Important:</strong> SAVAURXI sells infrastructure, systems, and knowledge-based products only. We do not guarantee business outcomes, revenue, or results of any kind. All sales are final. By using our services you accept full responsibility for your business decisions and their consequences.</p>
+  </div>
+</div>
+
+<div class="layout">
+
+  <aside class="sidebar" aria-label="Page navigation">
+    <div class="sidebar-label">Sections</div>
+    <ul class="sidebar-nav">
+      <li><a href="#s1">01 · About SAVAURXI</a></li>
+      <li><a href="#s2">02 · Acceptance of Terms</a></li>
+      <li><a href="#s3">03 · Products & Services</a></li>
+      <li><a href="#s4">04 · Digital Product Access</a></li>
+      <li><a href="#s5">05 · Done-For-You Services</a></li>
+      <li><a href="#s6">06 · Coaching & Mentorship</a></li>
+      <li><a href="#s7">07 · Community Access</a></li>
+      <li><a href="#s8">08 · No Refund Policy</a></li>
+      <li><a href="#s9">09 · No Guarantee of Results</a></li>
+      <li><a href="#s10">10 · Limitation of Liability</a></li>
+      <li><a href="#s11">11 · Intellectual Property</a></li>
+      <li><a href="#s12">12 · Account Responsibility</a></li>
+      <li><a href="#s13">13 · Prohibited Conduct</a></li>
+      <li><a href="#s14">14 · Chargebacks & Disputes</a></li>
+      <li><a href="#s15">15 · Termination</a></li>
+      <li><a href="#s16">16 · Governing Law</a></li>
+      <li><a href="#s17">17 · Changes to Terms</a></li>
+      <li><a href="#s18">18 · Contact Us</a></li>
+    </ul>
+  </aside>
+
+  <main class="content">
+
+    <!-- S1 -->
+    <section class="section" id="s1">
+      <div class="section-number">01</div>
+      <h2>About SAVAURXI</h2>
+      <p>SAVAURXI ("we," "us," "our," or "the Company") is a digital infrastructure company operating at <strong>savaurxi.tech</strong>. We provide digital products, done-for-you infrastructure services, mentorship, and community access to creators, entrepreneurs, and businesses.</p>
+      <p>These Terms & Conditions ("Terms") constitute a legally binding agreement between you ("Client," "User," or "you") and SAVAURXI. These Terms apply to all products, services, content, and communities offered by SAVAURXI, whether accessed directly through our website, via third-party platforms, or through any payment method.</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- S2 -->
+    <section class="section" id="s2">
+      <div class="section-number">02</div>
+      <h2>Acceptance of Terms</h2>
+      <p>By visiting our website, purchasing any product or service, joining any community, or engaging with any content offered by SAVAURXI, you confirm that you:</p>
+      <ul class="item-list">
+        <li>Have read, understood, and agree to these Terms in full.</li>
+        <li>Are at least 18 years of age, or have obtained valid parental or guardian consent.</li>
+        <li>Have the legal capacity to enter into a binding agreement.</li>
+        <li>Are not prohibited from receiving our products or services under any applicable law.</li>
+      </ul>
+      <div class="callout">
+        <p><strong>If you do not agree</strong> to any part of these Terms, you must immediately cease using our website and refrain from purchasing or accessing any of our products or services.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- S3 -->
+    <section class="section" id="s3">
+      <div class="section-number">03</div>
+      <h2>Products & Services Overview</h2>
+      <p>SAVAURXI offers the following categories of products and services:</p>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Digital Products</td>
+            <td>Courses, guides, templates, frameworks, pre-recorded content, and downloadable resources.</td>
+          </tr>
+          <tr>
+            <td>Done-For-You Services</td>
+            <td>Funnel building, marketing infrastructure, brand positioning, and digital product development executed by our team.</td>
+          </tr>
+          <tr>
+            <td>Mentorship & Coaching</td>
+            <td>Advisory sessions, strategy calls, and ongoing mentorship programmes delivered by SAVAURXI personnel.</td>
+          </tr>
+          <tr>
+            <td>Community Access</td>
+            <td>Access to private groups, Discord servers, or other community platforms, where included with a purchase.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Specific deliverables, timelines, and scope for any engagement are outlined in the respective product or service description at the time of purchase. In the absence of a separate written agreement, these Terms govern the entire relationship.</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- S4 -->
+    <section class="section" id="s4">
+      <div class="section-number">04</div>
+      <h2>Digital Product Access</h2>
+      <p>Upon successful payment, you will receive access credentials or download links via email. Please ensure your email address is entered correctly at checkout — SAVAURXI is not responsible for non-delivery caused by incorrect contact details.</p>
+      <ul class="item-list">
+        <li>Digital products are delivered electronically and are considered received and consumed upon delivery of access credentials.</li>
+        <li>Where "lifetime access" is stated, this refers to continued access for as long as the product is actively hosted and maintained by SAVAURXI. It does not guarantee perpetual access if the product is discontinued.</li>
+        <li>We reserve the right to change hosting platforms, update content, modify delivery formats, or retire products at our sole discretion.</li>
+        <li>Lifetime access does not include future premium products, separate services, or communities unless explicitly stated at the time of purchase.</li>
+      </ul>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- S5 -->
+    <section class="section" id="s5">
+      <div class="section-number">05</div>
+      <h2>Done-For-You Services</h2>
+      <p>When you engage SAVAURXI for done-for-you (DFY) services, you acknowledge and agree to the following:</p>
+      <ul class="item-list">
+        <li>Timelines are estimates. SAVAURXI will make reasonable efforts to meet agreed delivery timeframes, but delays may occur due to factors outside our control, including your responsiveness in providing required materials, approvals, or feedback.</li>
+        <li>You are responsible for supplying all required assets, content, brand materials, access credentials, and information in a timely manner. Delays caused by you do not constitute a breach by SAVAURXI.</li>
+        <li>SAVAURXI provides infrastructure, systems, and execution. The commercial performance of any funnel, campaign, or product built by us is not guaranteed and depends entirely on market conditions, audience quality, and your independent business decisions.</li>
+        <li>Revisions and scope changes beyond what is agreed at the time of engagement may attract additional charges.</li>
+        <li>SAVAURXI retains the right to use completed work in its portfolio unless explicitly agreed otherwise in writing.</li>
+      </ul>
+      <div class="callout-red">
+        <p><strong>No performance guarantee:</strong> SAVAURXI builds and deploys systems on your behalf. We make no representation, warranty, or guarantee regarding conversion rates, revenue generated, audience growth, or any other business metric resulting from our work. Results depend on factors entirely outside our control.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- S6 -->
+    <section class="section" id="s6">
+      <div class="section-number">06</div>
+      <h2>Mentorship & Coaching</h2>
+      <p>SAVAURXI may offer mentorship programmes, strategy sessions, or advisory services. By engaging in these services, you acknowledge:</p>
+      <ul class="item-list">
+        <li>Mentorship and coaching content is for informational and educational purposes only. It does not constitute financial, legal, tax, investment, or professional advice of any kind.</li>
+        <li>Any strategies, frameworks, or recommendations shared are based on general knowledge and experience. They are not tailored financial or legal guidance.</li>
+        <li>You are solely responsible for evaluating any advice and for all decisions you make as a result of your engagement with SAVAURXI.</li>
+        <li>Past results discussed during sessions do not guarantee or predict your future results.</li>
+        <li>Sessions may be conducted via video call, voice call, or messaging platforms. SAVAURXI may record sessions for internal quality purposes unless you explicitly object in writing prior to the session.</li>
+      </ul>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- S7 -->
+    <section class="section" id="s7">
+      <div class="section-number">07</div>
+      <h2>Community Access</h2>
+      <p>Where a purchase includes access to a private community (e.g., Discord server, Telegram group, or similar platform), the following rules apply:</p>
+      <ul class="item-list">
+        <li>Community access is a supplementary benefit, not the primary product. Removal from a community does not entitle you to a refund.</li>
+        <li>You must comply with all community rules posted within the platform at all times.</li>
+        <li>Prohibited conduct includes but is not limited to: spamming, self-promotion, harassment, hate speech, sharing of paid content outside the group, and any illegal activity or discussion.</li>
+        <li>SAVAURXI reserves the right to remove any member from any community at any time, without notice and without refund, for any conduct deemed disruptive or in breach of these Terms.</li>
+        <li>Community platforms are operated by third-party providers (e.g., Discord Inc.). SAVAURXI is not responsible for platform outages, changes to platform features, or actions taken by the platform against your account.</li>
+      </ul>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- S8 -->
+    <section class="section" id="s8">
+      <div class="section-number">08</div>
+      <h2>No Refund Policy</h2>
+      <div class="callout-red">
+        <p><strong>All sales are final. SAVAURXI does not offer refunds under any circumstances.</strong></p>
+      </div>
+      <p>By completing any purchase, you explicitly acknowledge and agree that:</p>
+      <ul class="item-list">
+        <li>No refunds will be issued for any reason, including but not limited to dissatisfaction with the product, lack of results, change of mind, inability to access the content, personal circumstances, or payment errors.</li>
+        <li>This policy applies to all products and services: digital products, done-for-you services, mentorship, and community access.</li>
+        <li>No trial periods, cooling-off periods, or partial refunds are offered.</li>
+        <li>Access to digital content is granted immediately upon payment and is considered fully consumed once delivered.</li>
+        <li>This policy applies regardless of whether payment was made online, via UPI, bank transfer, or any other method.</li>
+      </ul>
+      <p>We strongly encourage all prospective clients to thoroughly review product descriptions, ask any questions via email prior to purchase, and ensure the product is suitable for their needs before completing payment.</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- S9 -->
+    <section class="section" id="s9">
+      <div class="section-number">09</div>
+      <h2>No Guarantee of Results</h2>
+      <div class="callout-red">
+        <p><strong>SAVAURXI makes absolutely no guarantee, promise, or representation regarding the results, revenue, growth, or outcomes you may or may not achieve through the use of our products, services, content, or advice.</strong></p>
+      </div>
+      <p>You expressly acknowledge and agree that:</p>
+      <ul class="item-list">
+        <li>Business success depends on numerous variables entirely outside SAVAURXI's control, including but not limited to your effort, market conditions, competition, audience quality, economic climate, and your independent decision-making.</li>
+        <li>Any case studies, testimonials, income figures, or examples of results shared on our website, in our content, or by our team are illustrative only. They represent exceptional outcomes and are not typical. Your results will vary.</li>
+        <li>Nothing communicated by SAVAURXI — verbally, in writing, in content, or in strategy sessions — constitutes a promise, projection, or guarantee of any business or financial outcome.</li>
+        <li>SAVAURXI sells systems, frameworks, and execution. What you do with those systems is entirely your responsibility.</li>
+        <li>Past performance of our clients, our own business, or any strategy we deploy does not guarantee or predict future results for you or anyone else.</li>
+      </ul>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- S10 -->
+    <section class="section" id="s10">
+      <div class="section-number">10</div>
+      <h2>Limitation of Liability</h2>
+      <div class="callout-red">
+        <p><strong>To the maximum extent permitted by applicable law, SAVAURXI, its founders, team members, contractors, affiliates, and representatives shall not be liable for any losses, damages, or claims of any kind arising from your use of our products or services.</strong></p>
+      </div>
+      <p>This limitation applies to all categories of loss, including but not limited to:</p>
+      <ul class="item-list">
+        <li>Loss of revenue, profits, business opportunities, or anticipated savings.</li>
+        <li>Loss of data, goodwill, or reputation.</li>
+        <li>Business interruption or failure.</li>
+        <li>Financial losses resulting from strategies, advice, or content provided by SAVAURXI.</li>
+        <li>Technical failures, access issues, or disruptions to digital products or platforms.</li>
+        <li>Actions or decisions you took based on any information, content, or advice from SAVAURXI.</li>
+        <li>Any indirect, incidental, consequential, special, or punitive damages, even if SAVAURXI was advised of the possibility of such damages.</li>
+      </ul>
+      <p>
+        In any event, SAVAURXI's total aggregate liability to you for any and all claims arising under or in connection with these Terms shall not exceed the total amount you paid to SAVAURXI in the thirty (30) days preceding the event giving rise to the claim.
+      </p>
+      <p>
+        SAVAURXI operates as a vendor of digital products and infrastructure services only. We are not your business partner, financial advisor, legal advisor, or fiduciary. You bear sole responsibility for all business and financial decisions made by you, regardless of any input from SAVAURXI.
+      </p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- S11 -->
+    <section class="section" id="s11">
+      <div class="section-number">11</div>
+      <h2>Intellectual Property</h2>
+      <p>All content created and distributed by SAVAURXI — including but not limited to course materials, videos, PDFs, templates, frameworks, funnels, strategies, community content, website copy, branding, and systems — is the exclusive intellectual property of SAVAURXI.</p>
+      <p>You are expressly prohibited from:</p>
+      <ul class="item-list">
+        <li>Sharing, distributing, reselling, or gifting any SAVAURXI content to any third party.</li>
+        <li>Uploading or reproducing paid content on any public or private platform, group, or channel.</li>
+        <li>Allowing any other person to access your account or use your credentials.</li>
+        <li>Reproducing, repurposing, or adapting any part of SAVAURXI's content for commercial or personal use without prior written authorisation.</li>
+        <li>Reverse-engineering any system, funnel, or framework delivered as part of our services for resale or redistribution.</li>
+      </ul>
+      <p>For done-for-you work: upon full payment, you receive a licence to use the deliverables for your own business purposes. Underlying methodologies, frameworks, and systems remain the intellectual property of SAVAURXI unless a separate written agreement states otherwise.</p>
+      <div class="callout-red">
+        <p>Violation of this clause will result in <strong>immediate account termination without refund</strong> and may result in civil or criminal legal action under applicable Indian intellectual property law.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- S12 -->
+    <section class="section" id="s12">
+      <div class="section-number">12</div>
+      <h2>Account Responsibility</h2>
+      <p>You are solely responsible for:</p>
+      <ul class="item-list">
+        <li>Maintaining the confidentiality of your login credentials and access links.</li>
+        <li>All activity that occurs under your account.</li>
+        <li>Ensuring no unauthorised person accesses your account or purchased content.</li>
+        <li>Using SAVAURXI products and services for personal, non-commercial use only, unless explicitly agreed otherwise in writing.</li>
+      </ul>
+      <p>Accounts found to be shared, transferred, or misused will be suspended or permanently terminated without notice and without refund.</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- S13 -->
+    <section class="section" id="s13">
+      <div class="section-number">13</div>
+      <h2>Prohibited Conduct</h2>
+      <p>When using any SAVAURXI product, service, or community, you must not:</p>
+      <ul class="item-list">
+        <li>Violate any applicable local, state, national, or international law or regulation.</li>
+        <li>Engage in fraudulent, deceptive, or misleading conduct toward SAVAURXI or any other user.</li>
+        <li>Attempt to gain unauthorised access to any system, account, or data belonging to SAVAURXI or its clients.</li>
+        <li>Use our products or services to engage in or facilitate any illegal business activity.</li>
+        <li>Defame, harass, or make false representations about SAVAURXI or its team members publicly or privately.</li>
+        <li>Use our brand, name, or content to imply endorsement or affiliation without written permission.</li>
+      </ul>
+      <p>SAVAURXI reserves the right to take any action it deems appropriate in response to prohibited conduct, including suspension, termination, and legal action.</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- S14 -->
+    <section class="section" id="s14">
+      <div class="section-number">14</div>
+      <h2>Chargebacks & Payment Disputes</h2>
+      <p>
+        Initiating a chargeback, payment reversal, or dispute with your bank or payment processor after accessing any SAVAURXI product or service is considered a material breach of these Terms and constitutes fraud.
+      </p>
+      <p>In such an event, SAVAURXI reserves the right to:</p>
+      <ul class="item-list">
+        <li>Immediately revoke all access to any and all current and future SAVAURXI products and services.</li>
+        <li>Permanently blacklist your name, email, phone number, and payment details from all SAVAURXI platforms.</li>
+        <li>Pursue legal action and/or engage third-party debt collection to recover the disputed amount plus any associated fees and costs.</li>
+        <li>Report the fraudulent chargeback to relevant authorities where applicable.</li>
+      </ul>
+      <div class="callout">
+        <p><strong>If you have a payment concern</strong>, please contact us at <a href="mailto:secure.communications@savaurxi.tech" style="color:var(--accent2);">secure.communications@savaurxi.tech</a> before initiating any dispute. We are happy to resolve legitimate billing errors directly.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- S15 -->
+    <section class="section" id="s15">
+      <div class="section-number">15</div>
+      <h2>Termination</h2>
+      <p>SAVAURXI reserves the right to suspend or terminate your access to any product, service, or community at any time, with or without notice, and without refund, if:</p>
+      <ul class="item-list">
+        <li>You breach any provision of these Terms.</li>
+        <li>Your conduct is deemed harmful, disruptive, or damaging to SAVAURXI, its team, or its community.</li>
+        <li>We are required to do so by law or regulation.</li>
+        <li>We discontinue a product or service for any business reason.</li>
+      </ul>
+      <p>Upon termination, your right to access and use the relevant product or service ceases immediately. Provisions of these Terms that by their nature should survive termination (including intellectual property, limitation of liability, and dispute resolution) shall continue in full force.</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- S16 -->
+    <section class="section" id="s16">
+      <div class="section-number">16</div>
+      <h2>Governing Law & Dispute Resolution</h2>
+      <p>
+        These Terms are governed by and construed in accordance with the laws of India, including the Information Technology Act, 2000, the Consumer Protection Act, 2019, and any other applicable legislation.
+      </p>
+      <p>
+        Any dispute, claim, or controversy arising out of or in connection with these Terms, including any question regarding their existence, validity, or termination, shall be subject to the exclusive jurisdiction of the courts located in <strong>[Insert your city, e.g. Kochi / Mumbai / Bengaluru]</strong>, India.
+      </p>
+      <p>
+        Prior to initiating any legal proceedings, both parties agree to attempt to resolve the dispute through good-faith negotiation for a period of not less than 30 days.
+      </p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- S17 -->
+    <section class="section" id="s17">
+      <div class="section-number">17</div>
+      <h2>Changes to These Terms</h2>
+      <p>
+        SAVAURXI reserves the right to modify, update, or replace these Terms at any time. The most current version will always be published at <strong>savaurxi.tech/terms</strong> with the updated effective date.
+      </p>
+      <p>
+        For material changes, we will make reasonable efforts to notify active clients via email or a prominent notice on our website. Your continued use of any SAVAURXI product or service following the publication of updated Terms constitutes your acceptance of those changes.
+      </p>
+      <p>
+        It is your responsibility to review these Terms periodically. If you do not agree to any updated Terms, you must cease using our products and services.
+      </p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- S18 -->
+    <section class="section" id="s18">
+      <div class="section-number">18</div>
+      <h2>Contact Us</h2>
+      <p>For any questions, concerns, or legal notices relating to these Terms, please contact us at:</p>
+      <div class="contact-block">
+        <div class="contact-info">
+          <strong>Company</strong>
+          <p style="color:var(--text); font-weight:600;">SAVAURXI</p>
+          <p>[Registered Address, India]</p>
+        </div>
+        <div class="contact-info">
+          <strong>Legal & General Enquiries</strong>
+          <a href="mailto:secure.communications@savaurxi.tech" class="contact-email">secure.communications@savaurxi.tech</a>
+        </div>
+        <div class="contact-info">
+          <strong>Website</strong>
+          <a href="https://savaurxi.tech" class="contact-email">savaurxi.tech</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- AGREEMENT BOX -->
+    <div class="agreement-box">
+      <p>By purchasing, accessing, or using any product or service offered by SAVAURXI, you confirm that you have <strong>read, understood, and unconditionally agreed</strong> to these Terms & Conditions in their entirety.</p>
+    </div>
+
+  </main>
+</div>
+
+<footer>
+  <span class="footer-logo">SAVAURXI</span>
+  <span class="footer-note">© 2025 SAVAURXI · savaurxi.tech · Terms & Conditions v1.0</span>
+</footer>
+
+</body>
+</html>
