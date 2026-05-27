@@ -63,9 +63,17 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    backdrop-filter: blur(20px);
-    background: rgba(2,6,23,0.85);
-    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    background: linear-gradient(
+      135deg,
+      rgba(255,255,255,0.06) 0%,
+      rgba(255,255,255,0.02) 100%
+    );
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.05) inset,
+      0 4px 32px rgba(0,0,0,0.4);
     padding: 16px 24px;
     display: flex;
     align-items: center;
@@ -832,7 +840,7 @@
           <div class="price-item"><span class="pi-check">✓</span><span>Trading mindset & psychology books</span></div>
           <div class="price-item"><span class="pi-check">✓</span><span>Lifetime access · Instant download</span></div>
         </div>
-        <a href="#" class="btn-primary" style="display:block;text-align:center;font-size:17px;padding:18px 32px;">Get Instant Access Now →</a>
+        <a href="https://whop.com/joined/trading-mega-kit/products/trading-mega-kit-60/" class="btn-primary" style="display:block;text-align:center;font-size:17px;padding:18px 32px;">Get Instant Access Now →</a>
         <p style="font-size:12px;color:var(--muted);margin-top:14px;text-align:center">Secure checkout · Immediate delivery · No subscriptions</p>
       </div>
     </div>
