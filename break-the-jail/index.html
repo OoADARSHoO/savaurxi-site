@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Account Warm-Up Blueprint — Break the 200-300 View Jail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+/* ─────────────────────────────────────────
+   TOKENS
+───────────────────────────────────────── */
+:root {
+  --bg:        #060912;
+  --bg2:       #080d1a;
+  --blue:      #0ea5e9;
+  --blue-hi:   #38bdf8;
+  --blue-dim:  rgba(14,165,233,0.12);
+  --blue-mid:  rgba(14,165,233,0.30);
+  --orange:    #f97316;
+  --green:     #22c55e;
+  --white:     #f0f4ff;
+  --text:      #c8d4f0;
+  --muted:     #5a6a8a;
+  --card:      rgba(255,255,255,0.03);
+  --border:    rgba(255,255,255,0.07);
+  --border-b:  rgba(14,165,233,0.20);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Outfit',sans-serif;
+  overflow-x:hidden;
+}
+
+/* ─────────────────────────────────────────
+   CANVAS STARS
+───────────────────────────────────────── */
+#cv{
+  position:fixed;inset:0;z-index:0;
+  pointer-events:none;opacity:0.45;
+}
+
+/* ─────────────────────────────────────────
+   BLUE RADIAL GLOW
+───────────────────────────────────────── */
+.glow-top{
+  position:fixed;top:-280px;left:50%;
+  transform:translateX(-50%);
+  width:1000px;height:1000px;
+  border-radius:50%;
+  background:radial-gradient(circle,
+    rgba(14,165,233,0.18) 0%,
+    rgba(14,165,233,0.06) 38%,
+    transparent 68%
+  );
+  pointer-events:none;z-index:0;
+}
+
+/* ─────────────────────────────────────────
+   URGENCY BAR
+───────────────────────────────────────── */
+.urgency-bar{
+  position:relative;z-index:200;
+  background:linear-gradient(90deg,#0c1a35,#0a2040,#0c1a35);
+  border-bottom:1px solid rgba(14,165,233,0.25);
+  padding:9px 16px;
+  text-align:center;
+  font-size:13px;font-weight:600;
+  color:var(--white);
+  letter-spacing:0.3px;
+  overflow:hidden;
+}
+.urgency-bar::before{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(90deg,
+    transparent 0%,
+    rgba(14,165,233,0.08) 50%,
+    transparent 100%
+  );
+  animation:sweep 3s ease-in-out infinite;
+}
+@keyframes sweep{
+  0%{transform:translateX(-100%)}
+  100%{transform:translateX(100%)}
+}
+.urgency-bar .ub-inner{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  position:relative;z-index:1;flex-wrap:wrap;
+}
+.urgency-bar .fire{font-size:15px;animation:flicker 1.2s ease-in-out infinite alternate;}
+@keyframes flicker{from{transform:scale(1)}to{transform:scale(1.2)}}
+.urgency-bar .price-up{color:#f97316;font-weight:800;}
+.ub-dot{width:6px;height:6px;border-radius:50%;background:#f97316;display:inline-block;animation:pulse-dot 1.5s ease-in-out infinite;}
+@keyframes pulse-dot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:0.6}}
+
+/* ─────────────────────────────────────────
+   NAV
+───────────────────────────────────────── */
+nav{
+  position:sticky;top:0;z-index:100;
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  background:linear-gradient(135deg,
+    rgba(255,255,255,0.05) 0%,
+    rgba(255,255,255,0.02) 100%
+  );
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.04) inset,
+    0 4px 40px rgba(0,0,0,0.5);
+  padding:14px 28px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nav-logo{
+  display:flex;align-items:center;gap:10px;
+}
+.nav-logo .logo-icon{
+  width:34px;height:34px;
+  background:linear-gradient(135deg,var(--blue),#0369a1);
+  border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:17px;
+}
+.nav-logo .logo-text{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:18px;letter-spacing:2px;
+  color:var(--white);
+  line-height:1;
+}
+.nav-logo .logo-sub{
+  font-size:10px;color:var(--blue-hi);
+  font-weight:600;letter-spacing:1.5px;
+  text-transform:uppercase;display:block;margin-top:1px;
+}
+.nav-right{display:flex;align-items:center;gap:14px;}
+.nav-price{
+  font-size:13px;color:var(--muted);font-weight:500;
+}
+.nav-price strong{color:var(--white);font-weight:800;}
+.nav-cta{
+  background:linear-gradient(135deg,var(--blue),#0284c7);
+  color:#fff;font-weight:700;font-size:14px;
+  padding:10px 22px;border-radius:7px;
+  text-decoration:none;
+  box-shadow:0 0 20px rgba(14,165,233,0.35);
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.nav-cta:hover{
+  transform:translateY(-1px);
+  box-shadow:0 0 35px rgba(14,165,233,0.55);
+}
+
+/* ─────────────────────────────────────────
+   LAYOUT
+───────────────────────────────────────── */
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px;position:relative;z-index:2;}
+section{position:relative;z-index:2;}
+
+/* ─────────────────────────────────────────
+   HERO
+───────────────────────────────────────── */
+.hero{
+  padding:88px 24px 72px;
+  text-align:center;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1px solid rgba(14,165,233,0.35);
+  background:rgba(14,165,233,0.08);
+  color:var(--blue-hi);
+  font-size:12px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  padding:7px 18px;border-radius:100px;
+  margin-bottom:30px;
+}
+.hero h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(48px,9vw,100px);
+  line-height:0.92;
+  letter-spacing:2px;
+  color:var(--white);
+  margin-bottom:8px;
+}
+.hero h1 .accent{
+  color:var(--orange);
+  -webkit-text-stroke:0px;
+}
+.hero h1 .blue{color:var(--blue-hi);}
+.hero-tagline{
+  font-size:clamp(15px,2vw,19px);
+  color:var(--text);
+  max-width:600px;
+  margin:18px auto 38px;
+  line-height:1.65;
+  font-weight:400;
+}
+.hero-tagline strong{color:var(--white);font-weight:700;}
+
+/* before / after stats */
+.ba-strip{
+  display:flex;align-items:center;justify-content:center;
+  gap:0;margin:0 auto 44px;
+  max-width:560px;
+}
+.ba-box{
+  flex:1;padding:22px 28px;
+  border:1px solid var(--border);
+  background:var(--card);
+  border-radius:14px;
+}
+.ba-box.before{border-color:rgba(239,68,68,0.25);background:rgba(239,68,68,0.05);}
+.ba-box.after{border-color:rgba(34,197,94,0.25);background:rgba(34,197,94,0.05);}
+.ba-label{
+  font-size:11px;font-weight:800;letter-spacing:3px;
+  text-transform:uppercase;margin-bottom:6px;
+}
+.before .ba-label{color:#ef4444;}
+.after  .ba-label{color:var(--green);}
+.ba-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:48px;line-height:1;
+}
+.before .ba-num{color:#ef4444;}
+.after  .ba-num{color:var(--green);}
+.ba-sub{font-size:12px;color:var(--muted);margin-top:4px;}
+.ba-arrow{
+  padding:0 20px;
+  font-size:28px;color:var(--blue-hi);
+  flex-shrink:0;
+}
+
+.hero-pills{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:10px;
+  margin-bottom:38px;
+}
+.pill{
+  display:flex;align-items:center;gap:7px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid var(--border);
+  border-radius:100px;
+  padding:7px 16px;
+  font-size:13px;font-weight:600;color:var(--text);
+}
+.pill .dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--blue);flex-shrink:0;
+}
+
+.cta-group{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:16px;}
+.btn-primary{
+  background:linear-gradient(135deg,var(--blue) 0%,#0284c7 100%);
+  color:#fff;font-weight:800;font-size:17px;
+  padding:18px 44px;border-radius:10px;
+  text-decoration:none;
+  box-shadow:0 0 40px rgba(14,165,233,0.40);
+  transition:transform 0.2s,box-shadow 0.2s;
+  position:relative;overflow:hidden;
+}
+.btn-primary::after{
+  content:'';
+  position:absolute;top:0;left:-100%;width:60%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent);
+  animation:shine 3s ease-in-out infinite;
+}
+@keyframes shine{to{left:160%}}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 60px rgba(14,165,233,0.60);}
+.btn-ghost{
+  border:1px solid var(--border-b);
+  color:var(--text);font-weight:600;font-size:17px;
+  padding:18px 34px;border-radius:10px;
+  text-decoration:none;transition:border-color 0.2s,color 0.2s;
+}
+.btn-ghost:hover{border-color:var(--blue);color:var(--white);}
+.cta-note{font-size:12px;color:var(--muted);text-align:center;}
+
+/* platforms */
+.platforms{
+  display:flex;align-items:center;justify-content:center;
+  gap:22px;margin-top:52px;flex-wrap:wrap;
+}
+.platform-item{
+  display:flex;align-items:center;gap:8px;
+  font-size:14px;font-weight:600;color:var(--muted);
+}
+.platform-icon{font-size:20px;}
+
+/* ─────────────────────────────────────────
+   DIVIDER
+───────────────────────────────────────── */
+.divider{
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(14,165,233,0.2),transparent);
+  margin:0 24px;
+}
+
+/* ─────────────────────────────────────────
+   SECTION HEADER
+───────────────────────────────────────── */
+.sec-label{
+  font-size:11px;font-weight:800;letter-spacing:3px;
+  text-transform:uppercase;color:var(--blue-hi);margin-bottom:12px;
+}
+.sec-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(34px,5vw,56px);
+  letter-spacing:1px;line-height:1.02;
+  color:var(--white);margin-bottom:12px;
+}
+.sec-sub{
+  font-size:16px;color:var(--muted);
+  max-width:560px;line-height:1.65;
+}
+
+/* ─────────────────────────────────────────
+   WHAT'S INSIDE — MAIN PRODUCT
+───────────────────────────────────────── */
+.inside{padding:90px 0;}
+.inside-layout{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:56px;
+  align-items:start;
+  margin-top:54px;
+}
+@media(max-width:768px){.inside-layout{grid-template-columns:1fr;gap:36px;}}
+
+.inside-modules{display:flex;flex-direction:column;gap:14px;}
+.module-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:22px 22px;
+  display:flex;gap:16px;align-items:flex-start;
+  transition:border-color 0.25s,transform 0.25s;
+  cursor:default;
+  /* spotlight effect via JS */
+  position:relative;overflow:hidden;
+}
+.module-card:hover{border-color:var(--border-b);transform:translateX(4px);}
+.module-num{
+  width:36px;height:36px;flex-shrink:0;
+  background:var(--blue-dim);
+  border:1px solid var(--border-b);
+  border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:17px;color:var(--blue-hi);
+}
+.module-text .mt{font-weight:700;font-size:15px;color:var(--white);margin-bottom:4px;}
+.module-text .md{font-size:13px;color:var(--muted);line-height:1.55;}
+
+.inside-outcomes{display:flex;flex-direction:column;gap:18px;}
+.outcome-block{
+  background:linear-gradient(135deg,rgba(14,165,233,0.08),rgba(14,165,233,0.02));
+  border:1px solid var(--border-b);
+  border-radius:16px;
+  padding:26px 24px;
+}
+.ob-icon{font-size:28px;margin-bottom:12px;}
+.ob-title{font-weight:700;font-size:16px;color:var(--white);margin-bottom:6px;}
+.ob-desc{font-size:14px;color:var(--muted);line-height:1.6;}
+
+/* ─────────────────────────────────────────
+   BONUSES
+───────────────────────────────────────── */
+.bonuses{padding:90px 0;background:linear-gradient(180deg,transparent 0%,rgba(14,165,233,0.03) 50%,transparent 100%);}
+.bonus-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:18px;
+  margin-top:52px;
+}
+.bonus-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:28px 24px;
+  position:relative;
+  overflow:hidden;
+  transition:border-color 0.25s,transform 0.25s;
+  cursor:default;
+}
+.bonus-card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;
+  height:2px;
+  background:linear-gradient(90deg,transparent,var(--blue),transparent);
+  opacity:0;
+  transition:opacity 0.3s;
+}
+.bonus-card:hover{border-color:var(--border-b);transform:translateY(-4px);}
+.bonus-card:hover::before{opacity:1;}
+.bonus-badge{
+  display:inline-block;
+  background:rgba(34,197,94,0.12);
+  border:1px solid rgba(34,197,94,0.25);
+  color:var(--green);
+  font-size:10px;font-weight:800;letter-spacing:2px;
+  text-transform:uppercase;padding:4px 10px;border-radius:100px;
+  margin-bottom:16px;
+}
+.bonus-icon{font-size:30px;margin-bottom:12px;display:block;}
+.bonus-title{font-weight:700;font-size:16px;color:var(--white);margin-bottom:8px;}
+.bonus-desc{font-size:13px;color:var(--muted);line-height:1.6;}
+.bonus-value{
+  margin-top:16px;padding-top:14px;
+  border-top:1px solid var(--border);
+  font-size:12px;color:var(--muted);
+}
+.bonus-value span{color:var(--green);font-weight:700;}
+
+/* ─────────────────────────────────────────
+   URGENCY BLOCK
+───────────────────────────────────────── */
+.urgency-block{
+  margin:10px 24px;
+  background:linear-gradient(135deg,rgba(249,115,22,0.10),rgba(249,115,22,0.03));
+  border:1px solid rgba(249,115,22,0.25);
+  border-radius:20px;
+  padding:48px 44px;
+  text-align:center;
+  position:relative;z-index:2;overflow:hidden;
+}
+.urgency-block::after{
+  content:'⚠️';
+  position:absolute;right:-14px;top:-14px;
+  font-size:140px;opacity:0.05;
+}
+.ub-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(30px,4vw,46px);
+  color:var(--white);letter-spacing:1px;
+  margin-bottom:14px;
+}
+.ub-title span{color:var(--orange);}
+.ub-sub{font-size:15px;color:var(--muted);max-width:540px;margin:0 auto 28px;line-height:1.65;}
+.price-ladder{
+  display:flex;align-items:center;justify-content:center;
+  gap:0;flex-wrap:wrap;margin-bottom:28px;
+}
+.pl-item{
+  padding:18px 28px;text-align:center;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,0.02);
+  position:relative;
+}
+.pl-item:first-child{border-radius:12px 0 0 12px;}
+.pl-item:last-child{border-radius:0 12px 12px 0;background:linear-gradient(135deg,rgba(14,165,233,0.12),rgba(14,165,233,0.04));border-color:var(--border-b);}
+.pl-item+.pl-item{border-left:none;}
+.pl-week{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.pl-price{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--orange);}
+.pl-item:last-child .pl-price{color:var(--blue-hi);}
+.pl-tag{font-size:11px;color:var(--muted);margin-top:4px;}
+.pl-item:last-child .pl-tag{color:var(--blue);font-weight:600;}
+.pl-arrow{padding:0 16px;font-size:18px;color:var(--muted);align-self:center;}
+
+/* ─────────────────────────────────────────
+   TESTIMONIALS
+───────────────────────────────────────── */
+.testimonials{padding:90px 0;}
+.test-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:20px;
+  margin-top:52px;
+}
+.test-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:30px 26px;
+  transition:border-color 0.25s;
+  position:relative;
+}
+.test-card:hover{border-color:var(--border-b);}
+.test-quote-icon{
+  width:36px;height:36px;
+  background:var(--blue-dim);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;color:var(--blue-hi);
+  margin-bottom:18px;
+}
+.test-q{font-size:15px;line-height:1.7;color:#c0cfee;margin-bottom:22px;}
+.test-foot{display:flex;align-items:center;gap:12px;}
+.test-av{
+  width:42px;height:42px;border-radius:50%;
+  border:2px solid var(--border-b);
+  background:var(--blue-dim);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:15px;color:var(--blue-hi);
+  flex-shrink:0;
+}
+.test-name{font-weight:700;font-size:14px;color:var(--white);}
+.test-stars{color:#f97316;font-size:12px;margin-top:2px;letter-spacing:2px;}
+
+/* placeholder card */
+.test-add{
+  border:1.5px dashed var(--border);
+  border-radius:16px;
+  padding:30px 26px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:10px;color:var(--muted);font-size:13px;text-align:center;min-height:160px;
+}
+
+/* ─────────────────────────────────────────
+   WHAT YOU GET SUMMARY
+───────────────────────────────────────── */
+.summary{padding:90px 0;}
+.summary-box{
+  background:linear-gradient(135deg,rgba(14,165,233,0.09),rgba(14,165,233,0.02));
+  border:1px solid var(--border-b);
+  border-radius:22px;
+  padding:56px 52px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+  align-items:center;
+}
+@media(max-width:768px){.summary-box{grid-template-columns:1fr;padding:36px 24px;}}
+.summary-list{display:flex;flex-direction:column;gap:16px;}
+.sl-item{display:flex;gap:14px;align-items:flex-start;}
+.sl-check{
+  width:22px;height:22px;border-radius:50%;
+  background:rgba(34,197,94,0.15);
+  border:1px solid rgba(34,197,94,0.30);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;color:var(--green);flex-shrink:0;margin-top:1px;
+}
+.sl-text{font-size:15px;color:var(--text);line-height:1.55;}
+.sl-text strong{color:var(--white);}
+.summary-right{text-align:center;}
+.sr-price-label{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;}
+.sr-price{font-family:'Bebas Neue',sans-serif;font-size:88px;color:var(--white);line-height:0.9;}
+.sr-price sup{font-size:40px;vertical-align:super;}
+.sr-note{font-size:13px;color:var(--muted);margin-bottom:28px;margin-top:8px;}
+.sr-urgency{
+  font-size:13px;
+  background:rgba(249,115,22,0.1);
+  border:1px solid rgba(249,115,22,0.2);
+  color:var(--orange);
+  padding:8px 16px;border-radius:100px;
+  display:inline-block;font-weight:600;
+  margin-bottom:24px;
+}
+
+/* ─────────────────────────────────────────
+   FAQ
+───────────────────────────────────────── */
+.faq{padding:80px 0;}
+.faq-inner{max-width:720px;margin:48px auto 0;}
+.faq-item{border-bottom:1px solid var(--border);padding:20px 0;cursor:pointer;}
+.faq-q{
+  display:flex;justify-content:space-between;align-items:center;
+  font-weight:600;font-size:16px;color:var(--white);gap:16px;
+}
+.faq-ch{color:var(--blue-hi);font-size:22px;flex-shrink:0;transition:transform 0.3s;}
+.faq-a{
+  font-size:14px;color:var(--muted);line-height:1.7;
+  max-height:0;overflow:hidden;
+  transition:max-height 0.35s ease,padding-top 0.2s;
+}
+.faq-item.open .faq-a{max-height:300px;padding-top:14px;}
+.faq-item.open .faq-ch{transform:rotate(45deg);}
+
+/* ─────────────────────────────────────────
+   FOOTER CTA
+───────────────────────────────────────── */
+.footer-cta{
+  padding:90px 24px;text-align:center;
+  position:relative;z-index:2;
+}
+.footer-cta h2{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(38px,6vw,70px);
+  letter-spacing:2px;color:var(--white);
+  margin-bottom:18px;
+}
+.footer-cta h2 span{color:var(--blue-hi);}
+.footer-cta p{
+  font-size:16px;color:var(--muted);
+  max-width:480px;margin:0 auto 36px;line-height:1.65;
+}
+
+footer{
+  border-top:1px solid var(--border);
+  padding:28px 24px;
+  text-align:center;
+  font-size:12px;color:var(--muted);
+  position:relative;z-index:2;
+}
+
+/* ─────────────────────────────────────────
+   SCROLL ANIMATIONS
+───────────────────────────────────────── */
+.fi{opacity:0;transform:translateY(22px);transition:opacity 0.65s ease,transform 0.65s ease;}
+.fi.in{opacity:1;transform:translateY(0);}
+
+/* ─────────────────────────────────────────
+   RESPONSIVE MISC
+───────────────────────────────────────── */
+@media(max-width:600px){
+  .ba-strip{flex-direction:column;gap:8px;align-items:stretch;}
+  .ba-arrow{padding:6px 0;text-align:center;}
+  .price-ladder{flex-direction:column;align-items:center;}
+  .pl-item{border-radius:12px !important;border:1px solid var(--border) !important;width:100%;max-width:220px;}
+  .urgency-block{padding:32px 20px;}
+  .nav-right .nav-price{display:none;}
+}
+</style>
+</head>
+<body>
+
+<canvas id="cv"></canvas>
+<div class="glow-top"></div>
+
+<!-- ── URGENCY BAR ── -->
+<div class="urgency-bar">
+  <div class="ub-inner">
+    <span class="fire">🔥</span>
+    <span class="ub-dot"></span>
+    <span><span class="price-up">Price increases by $10 every week.</span> Currently <strong style="color:#fff;">$79</strong> — locks in at next week's price on Monday.</span>
+    <span class="ub-dot"></span>
+    <span class="fire">🔥</span>
+  </div>
+</div>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-logo">
+    <div class="logo-icon">🚀</div>
+    <div>
+      <div class="logo-text">WARM-UP BLUEPRINT</div>
+      <span class="logo-sub">By Savaurxi</span>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="nav-price">Current price: <strong>$79</strong></div>
+    <a href="#get-access" class="nav-cta">Get Access →</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-badge fi">
+      <span class="ub-dot"></span>
+      Break The 200–300 View Jail
+    </div>
+    <h1 class="fi">THE ACCOUNT<br/><span class="accent">WARM-UP</span><br/><span class="blue">BLUEPRINT</span></h1>
+    <p class="hero-tagline fi">
+      The <strong>exact warm-up framework</strong> used to escape the 200–300 view trap and unlock consistent algorithmic growth on Instagram, TikTok & YouTube — <strong>without bots, fake engagement, or paid ads.</strong>
+    </p>
+
+    <div class="ba-strip fi">
+      <div class="ba-box before">
+        <div class="ba-label">Before</div>
+        <div class="ba-num">236</div>
+        <div class="ba-sub">Average Views</div>
+      </div>
+      <div class="ba-arrow">→</div>
+      <div class="ba-box after">
+        <div class="ba-label">After ▲23,450%</div>
+        <div class="ba-num">125K+</div>
+        <div class="ba-sub">Views Per Post</div>
+      </div>
+    </div>
+
+    <div class="hero-pills fi">
+      <div class="pill"><span class="dot"></span>Break View Jail</div>
+      <div class="pill"><span class="dot"></span>Build Algorithm Trust</div>
+      <div class="pill"><span class="dot"></span>Increase Organic Reach</div>
+      <div class="pill"><span class="dot"></span>Works on IG, TT & YT</div>
+    </div>
+
+    <div class="cta-group fi">
+      <a href="#get-access" class="btn-primary">Break The View Jail — $79</a>
+      <a href="#whats-inside" class="btn-ghost">See What's Inside</a>
+    </div>
+    <p class="cta-note fi">⚡ Price increases $10 next week · Lifetime access · Instant delivery</p>
+
+    <div class="platforms fi">
+      <div class="platform-item"><span class="platform-icon">📸</span>Instagram</div>
+      <div class="platform-item"><span class="platform-icon">🎵</span>TikTok</div>
+      <div class="platform-item"><span class="platform-icon">▶️</span>YouTube</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── WHAT'S INSIDE ── -->
+<section id="whats-inside" class="inside">
+  <div class="wrap">
+    <div class="sec-label fi">The Main Course</div>
+    <h2 class="sec-title fi">Everything Inside The<br/>Warm-Up Blueprint</h2>
+    <p class="sec-sub fi">A step-by-step system for creators who are stuck. Each module builds on the last, taking your account from algorithm-ignored to algorithm-favored.</p>
+
+    <div class="inside-layout">
+      <!-- MODULES -->
+      <div class="inside-modules">
+        <div class="module-card fi">
+          <div class="module-num">01</div>
+          <div class="module-text">
+            <div class="mt">Why You're Stuck at 200–300 Views</div>
+            <div class="md">The real reason the algorithm is suppressing your content — and why posting more is making it worse. Understanding this changes everything.</div>
+          </div>
+        </div>
+        <div class="module-card fi">
+          <div class="module-num">02</div>
+          <div class="module-text">
+            <div class="mt">The Account Warm-Up Framework</div>
+            <div class="md">The exact warm-up protocol — what to do, when to do it, and for how long — to signal trust to the algorithm before you post.</div>
+          </div>
+        </div>
+        <div class="module-card fi">
+          <div class="module-num">03</div>
+          <div class="module-text">
+            <div class="mt">Building Algorithm Trust Signals</div>
+            <div class="md">How to make Instagram, TikTok, and YouTube treat your account as a reliable creator worth distributing — using native behaviour patterns.</div>
+          </div>
+        </div>
+        <div class="module-card fi">
+          <div class="module-num">04</div>
+          <div class="module-text">
+            <div class="mt">Organic Reach & Retention Multipliers</div>
+            <div class="md">Content structuring tactics that keep viewers watching longer, which directly tells the algorithm your content is worth pushing further.</div>
+          </div>
+        </div>
+        <div class="module-card fi">
+          <div class="module-num">05</div>
+          <div class="module-text">
+            <div class="mt">Platform-Specific Playbooks</div>
+            <div class="md">Separate warm-up strategies tailored for Instagram Reels, TikTok, and YouTube Shorts — because each algorithm rewards different signals.</div>
+          </div>
+        </div>
+        <div class="module-card fi">
+          <div class="module-num">06</div>
+          <div class="module-text">
+            <div class="mt">The Growth Maintenance System</div>
+            <div class="md">How to stay out of view jail permanently after breaking free. A sustainable weekly routine to keep your account in the algorithm's good books.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OUTCOMES -->
+      <div class="inside-outcomes">
+        <div class="outcome-block fi">
+          <div class="ob-icon">📈</div>
+          <div class="ob-title">Real, Consistent Growth</div>
+          <div class="ob-desc">Not one viral video followed by silence. A systematic approach to building momentum that compounds over time.</div>
+        </div>
+        <div class="outcome-block fi">
+          <div class="ob-icon">🤖</div>
+          <div class="ob-title">Algorithm Works For You</div>
+          <div class="ob-desc">Learn how the algorithm actually decides who to push — and position your account as the one it wants to distribute.</div>
+        </div>
+        <div class="outcome-block fi">
+          <div class="ob-icon">🚫</div>
+          <div class="ob-title">No Bots. No Fake Plays.</div>
+          <div class="ob-desc">100% organic. No grey-area tools, no engagement pods, no fake follower schemes. Just a framework that actually works.</div>
+        </div>
+        <div class="outcome-block fi">
+          <div class="ob-icon">⚡</div>
+          <div class="ob-title">Works From Week One</div>
+          <div class="ob-desc">You can start the warm-up protocol today. No waiting, no gear, no special setup. Open the course and begin immediately.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── BONUSES ── -->
+<section class="bonuses">
+  <div class="wrap">
+    <div class="sec-label fi" style="text-align:center">Free Bonuses Included</div>
+    <h2 class="sec-title fi" style="text-align:center">You Also Get All Of<br/><span style="color:var(--blue-hi)">This For Free</span></h2>
+    <p class="sec-sub fi" style="margin:0 auto;text-align:center;">Every member gets these at no extra cost. Not a limited-time gimmick — these are permanent additions to your access.</p>
+
+    <div class="bonus-grid">
+
+      <div class="bonus-card fi">
+        <div class="bonus-badge">Free Bonus #1</div>
+        <span class="bonus-icon">🎁</span>
+        <div class="bonus-title">Free Bonus Course Library</div>
+        <div class="bonus-desc">Handpicked supplementary courses covering content strategy, hook writing, and niche positioning to accelerate your growth even further.</div>
+        <div class="bonus-value">Worth <span>$97+</span> — yours free</div>
+      </div>
+
+      <div class="bonus-card fi">
+        <div class="bonus-badge">Free Bonus #2</div>
+        <span class="bonus-icon">🔓</span>
+        <div class="bonus-title">Free Access to Future Courses</div>
+        <div class="bonus-desc">Any new course or training we release related to social growth, content creation, and algorithm strategy — you get it automatically, free, forever.</div>
+        <div class="bonus-value">No extra payment. <span>Ever.</span></div>
+      </div>
+
+      <div class="bonus-card fi">
+        <div class="bonus-badge">Free Bonus #3</div>
+        <span class="bonus-icon">🔄</span>
+        <div class="bonus-title">Lifetime Algorithm Updates</div>
+        <div class="bonus-desc">Every time Instagram, TikTok, or YouTube updates their algorithm, the course gets updated too. You never fall behind — updates are pushed to you automatically.</div>
+        <div class="bonus-value">Stays <span>relevant forever</span></div>
+      </div>
+
+      <div class="bonus-card fi">
+        <div class="bonus-badge">Free Bonus #4</div>
+        <span class="bonus-icon">➕</span>
+        <div class="bonus-title">Free Course Add-Ons</div>
+        <div class="bonus-desc">Deep-dive add-on modules covering advanced topics like monetisation readiness, brand deal pitching, and turning views into income — no additional cost.</div>
+        <div class="bonus-value"><span>$0 extra</span> — included in your access</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── URGENCY PRICING ── -->
+<div class="urgency-block fi">
+  <div class="ub-title">⚠️ The Price Goes Up <span>Every Single Week</span></div>
+  <p class="ub-sub">Same course. Same bonuses. Same lifetime access. The only thing that changes is how much you pay. Lock in the lowest price available right now.</p>
+  <div class="price-ladder">
+    <div class="pl-item">
+      <div class="pl-week">This Week</div>
+      <div class="pl-price">$79</div>
+      <div class="pl-tag" style="color:var(--blue);font-weight:700;">← Current Price</div>
+    </div>
+    <div class="pl-arrow">→</div>
+    <div class="pl-item">
+      <div class="pl-week">Next Week</div>
+      <div class="pl-price">$89</div>
+      <div class="pl-tag">+$10 increase</div>
+    </div>
+    <div class="pl-arrow">→</div>
+    <div class="pl-item">
+      <div class="pl-week">Week After</div>
+      <div class="pl-price">$99</div>
+      <div class="pl-tag">+$20 total</div>
+    </div>
+  </div>
+  <a href="#get-access" class="btn-primary" style="display:inline-block;">Get In At $79 Before Monday →</a>
+</div>
+
+<!-- ── TESTIMONIALS ── -->
+<section class="testimonials">
+  <div class="wrap">
+    <div class="sec-label fi" style="text-align:center">Social Proof</div>
+    <h2 class="sec-title fi" style="text-align:center">Creators Are Already<br/><span style="color:var(--blue-hi)">Breaking Free</span></h2>
+
+    <div class="test-grid">
+      <div class="test-card fi">
+        <div class="test-quote-icon">"</div>
+        <p class="test-q">I went from 280 average views to hitting 12K on my third video after following the warm-up protocol. Insane. I thought my account was just dead.</p>
+        <div class="test-foot">
+          <div class="test-av">J</div>
+          <div>
+            <div class="test-name">Jordan M.</div>
+            <div class="test-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="test-card fi">
+        <div class="test-quote-icon">"</div>
+        <p class="test-q">The algorithm update module alone was worth the price. Every time IG changes something I used to panic — now I just check the course and adapt.</p>
+        <div class="test-foot">
+          <div class="test-av">A</div>
+          <div>
+            <div class="test-name">Aisha T.</div>
+            <div class="test-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="test-card fi">
+        <div class="test-quote-icon">"</div>
+        <p class="test-q">I've bought 4 other courses on growing on TikTok. This is the only one that actually explains the warm-up phase properly. Game changer.</p>
+        <div class="test-foot">
+          <div class="test-av">R</div>
+          <div>
+            <div class="test-name">Ryan K.</div>
+            <div class="test-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add more reviews below — copy a test-card block -->
+      <div class="test-add fi">
+        <span style="font-size:24px">+</span>
+        <span>More results coming in — yours could be next.</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── SUMMARY + PRICING ── -->
+<section id="get-access" class="summary">
+  <div class="wrap">
+    <div class="summary-box fi">
+      <div>
+        <div class="sec-label">Everything You Get</div>
+        <h2 class="sec-title" style="font-size:clamp(28px,3.5vw,42px);margin-bottom:28px;">One Price.<br/>Everything Included.</h2>
+        <div class="summary-list">
+          <div class="sl-item"><div class="sl-check">✓</div><div class="sl-text"><strong>Full Account Warm-Up Blueprint</strong> — all 6 modules</div></div>
+          <div class="sl-item"><div class="sl-check">✓</div><div class="sl-text"><strong>Platform-specific playbooks</strong> for IG, TikTok & YouTube</div></div>
+          <div class="sl-item"><div class="sl-check">✓</div><div class="sl-text"><strong>Free bonus course library</strong> — content & strategy training</div></div>
+          <div class="sl-item"><div class="sl-check">✓</div><div class="sl-text"><strong>All future courses</strong> — free access, automatically added</div></div>
+          <div class="sl-item"><div class="sl-check">✓</div><div class="sl-text"><strong>Lifetime algorithm updates</strong> — course stays current forever</div></div>
+          <div class="sl-item"><div class="sl-check">✓</div><div class="sl-text"><strong>Free course add-ons</strong> — monetisation, brand deals & more</div></div>
+          <div class="sl-item"><div class="sl-check">✓</div><div class="sl-text"><strong>Instant access</strong> — start the warm-up today</div></div>
+        </div>
+      </div>
+      <div class="summary-right">
+        <div class="sr-price-label">One-Time Investment</div>
+        <div class="sr-price"><sup>$</sup>79</div>
+        <div class="sr-note">Lifetime access · No subscription · Instant delivery</div>
+        <div class="sr-urgency">⚡ +$10 next Monday — lock in $79 now</div>
+        <a href="https://whop.com/joined/the-account-warm-up-blueprint/" target="_blank" class="btn-primary" style="display:block;text-align:center;font-size:16px;padding:18px 28px;">Get Instant Access on Whop →</a>
+        <p style="font-size:11px;color:var(--muted);margin-top:12px;">Secure checkout via Whop · Immediate access</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section class="faq">
+  <div class="wrap">
+    <div class="sec-label fi" style="text-align:center">FAQ</div>
+    <h2 class="sec-title fi" style="text-align:center">Got Questions?</h2>
+    <div class="faq-inner">
+
+      <div class="faq-item">
+        <div class="faq-q">What platforms does this work on?<span class="faq-ch">+</span></div>
+        <div class="faq-a">The warm-up framework is designed specifically for Instagram (Reels), TikTok, and YouTube Shorts. Each platform has its own dedicated playbook inside the course — the core principles overlap but the execution differs per algorithm.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Do I need a large following or existing audience?<span class="faq-ch">+</span></div>
+        <div class="faq-a">No. This is designed for creators stuck at low views regardless of follower count. The warm-up framework applies whether you have 50 or 50,000 followers — it's about account health signals, not audience size.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">How quickly will I see results?<span class="faq-ch">+</span></div>
+        <div class="faq-a">Most members start seeing improved reach within 1–3 weeks of following the warm-up protocol. Some see jumps in the first week. Results depend on how consistently you apply the framework — there are no overnight miracles, but this is the fastest legitimate path.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What does "lifetime algorithm updates" actually mean?<span class="faq-ch">+</span></div>
+        <div class="faq-a">Every time Instagram, TikTok, or YouTube makes a significant algorithm change, we update the relevant modules. You'll always have the most current version of the course without paying anything extra.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What free courses and add-ons are included?<span class="faq-ch">+</span></div>
+        <div class="faq-a">Your access includes the current bonus course library, plus any future courses and add-ons we release within the Warm-Up Blueprint community — covering topics like content hooks, monetisation readiness, and brand deals. These are added to your access automatically.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Why does the price go up every week?<span class="faq-ch">+</span></div>
+        <div class="faq-a">The price increases by $10 every week as more results come in and the course value grows. The content, bonuses, and access remain identical — only the price changes. Getting in earlier simply means paying less for the same thing.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Is there a refund policy?<span class="faq-ch">+</span></div>
+        <div class="faq-a">Please reach out via the Whop community chat or contact Savaurxi directly for refund enquiries. We want every member to be satisfied with their investment.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER CTA ── -->
+<div class="footer-cta">
+  <h2>Stop Being<br/><span>Algorithm-Ignored.</span></h2>
+  <p>The warm-up framework is ready. The question is whether you act before the price goes up next Monday.</p>
+  <a href="https://whop.com/joined/the-account-warm-up-blueprint/" target="_blank" class="btn-primary">Get The Blueprint — $79 This Week</a>
+</div>
+
+<footer>
+  <p>© 2026 The Account Warm-Up Blueprint · Created by Savaurxi · Results shown are individual and not guaranteed. Consistency with the framework is required.</p>
+</footer>
+
+<!-- ── SCRIPTS ── -->
+<script>
+/* STARS */
+const cv = document.getElementById('cv');
+const ctx = cv.getContext('2d');
+let stars = [];
+function resize(){
+  cv.width = window.innerWidth;
+  cv.height = window.innerHeight;
+  stars = [];
+  [[600,0.7,0.12],[150,1.4,0.06],[50,2.2,0.03]].forEach(([n,r,s])=>{
+    for(let i=0;i<n;i++) stars.push({x:Math.random()*cv.width,y:Math.random()*cv.height,r,s,o:Math.random()*0.5+0.15,tw:Math.random()*0.004+0.001});
+  });
+}
+let frame=0;
+function draw(){
+  ctx.clearRect(0,0,cv.width,cv.height);
+  frame++;
+  stars.forEach(s=>{
+    s.o=0.15+0.45*Math.abs(Math.sin(frame*s.tw+s.x));
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(180,210,255,${s.o})`;
+    ctx.fill();
+    s.y-=s.s;
+    if(s.y<-2) s.y=cv.height+2;
+  });
+  requestAnimationFrame(draw);
+}
+window.addEventListener('resize',resize);
+resize(); draw();
+
+/* SCROLL FADE IN */
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+},{threshold:0.08});
+document.querySelectorAll('.fi').forEach(el=>io.observe(el));
+
+/* FAQ */
+document.querySelectorAll('.faq-item').forEach(item=>{
+  item.querySelector('.faq-q').addEventListener('click',()=>item.classList.toggle('open'));
+});
+
+/* SPOTLIGHT GLOW on module cards — from spotlight-card component */
+document.querySelectorAll('.module-card').forEach(card=>{
+  card.addEventListener('pointermove',e=>{
+    const r = card.getBoundingClientRect();
+    const x = e.clientX - r.left;
+    const y = e.clientY - r.top;
+    card.style.background = `radial-gradient(260px circle at ${x}px ${y}px, rgba(14,165,233,0.10), rgba(255,255,255,0.03) 60%, transparent)`;
+  });
+  card.addEventListener('pointerleave',()=>{
+    card.style.background = 'var(--card)';
+  });
+});
+
+/* Same spotlight effect on bonus cards */
+document.querySelectorAll('.bonus-card').forEach(card=>{
+  card.addEventListener('pointermove',e=>{
+    const r = card.getBoundingClientRect();
+    const x = e.clientX - r.left;
+    const y = e.clientY - r.top;
+    card.style.background = `radial-gradient(280px circle at ${x}px ${y}px, rgba(14,165,233,0.08), rgba(255,255,255,0.02) 60%, transparent)`;
+  });
+  card.addEventListener('pointerleave',()=>{
+    card.style.background = 'var(--card)';
+  });
+});
+</script>
+</body>
+</html>
