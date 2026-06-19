@@ -171,10 +171,57 @@ nav::before{
   transform:translateY(-1px);
   box-shadow:0 0 35px rgba(14,165,233,0.55);
 }
+@media(max-width:768px){
 
-@media(max-width:900px){
-  .nav-timer{display:none;}
+  .nav-timer{
+    display:flex !important;
+    flex-direction:column;
+    align-items:center;
+    width:100%;
+    order:3;
+    margin-top:4px;
+    gap:6px;
+  }
+
+  .nav-timer-label{
+    display:block;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--orange);
+  }
+
+  .nav-price{
+    display:none !important;
+  }
+
+  .ub-timer{
+    justify-content:center;
+  }
 }
+
+@media(max-width:480px){
+
+  .ub-tseg{
+    min-width:34px;
+    padding:4px 6px;
+  }
+
+  .ub-tseg .ub-tnum{
+    font-size:14px;
+  }
+
+  .ub-tseg .ub-tunit{
+    font-size:6px;
+  }
+
+  .ub-tcolon{
+    font-size:12px;
+  }
+
+}
+
 @media(max-width:600px){
   .nav-right .nav-price{display:none;}
 }
@@ -845,7 +892,9 @@ footer{
   </div>
 
   <div class="nav-timer">
-    <span class="nav-timer-label"><span class="price-up">Price goes up $10</span> in:</span>
+    <span class="nav-timer-label">
+      <span class="price-up">Price goes up $10</span> in:
+    </span>
     <div class="ub-timer" id="ub-timer">
       <div class="ub-tseg"><span class="ub-tnum" id="t-days">00</span><span class="ub-tunit">Days</span></div>
       <span class="ub-tcolon">:</span>
