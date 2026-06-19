@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <base href="/break-the-jail/"/>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>The Account Warm-Up Blueprint — Break the 200-300 View Jail</title>
@@ -484,52 +485,65 @@ section{position:relative;z-index:2;}
 .pl-arrow{padding:0 16px;font-size:18px;color:var(--muted);align-self:center;}
 
 /* ─────────────────────────────────────────
-   TESTIMONIALS
+   TESTIMONIALS — scrolling marquee
 ───────────────────────────────────────── */
-.testimonials{padding:90px 0;}
-.test-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
-  gap:20px;
+.testimonials{padding:90px 0;overflow:hidden;}
+.testimonials .wrap{overflow:visible;}
+
+.test-ticker-track{
+  position:relative;
+  width:100%;
+  overflow:hidden;
+  padding:10px 0;
   margin-top:52px;
 }
-.test-card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:30px 26px;
-  transition:border-color 0.25s;
-  position:relative;
+.test-ticker-track::before,
+.test-ticker-track::after{
+  content:'';
+  position:absolute;top:0;bottom:0;
+  width:140px;z-index:5;pointer-events:none;
 }
-.test-card:hover{border-color:var(--border-b);}
-.test-quote-icon{
-  width:36px;height:36px;
-  background:var(--blue-dim);
+.test-ticker-track::before{left:0;background:linear-gradient(90deg,var(--bg),transparent);}
+.test-ticker-track::after{right:0;background:linear-gradient(-90deg,var(--bg),transparent);}
+
+.test-ticker-inner{
+  display:flex;
+  gap:20px;
+  width:max-content;
+  animation:test-ticker-scroll 32s linear infinite;
+  /* no pause on hover — keeps moving always */
+}
+
+@keyframes test-ticker-scroll{
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-50%);}
+}
+
+.test-ticker-card{
+  width:340px;
+  height:260px;
+  border-radius:16px;
+  border:1px solid var(--border);
+  background:var(--card);
+  overflow:hidden;
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color 0.25s;
+}
+.test-ticker-card:hover{border-color:var(--border-b);}
+.test-ticker-card img{width:100%;height:100%;object-fit:cover;display:block;}
+
+/* placeholder shown until a real screenshot is added */
+.tt-placeholder{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:10px;color:var(--muted);font-size:12.5px;text-align:center;padding:16px;
+}
+.tt-placeholder .tt-plus{
+  width:38px;height:38px;
+  border:1.5px dashed var(--border-b);
   border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  font-size:15px;color:var(--blue-hi);
-  margin-bottom:18px;
-}
-.test-q{font-size:15px;line-height:1.7;color:#c0cfee;margin-bottom:22px;}
-.test-foot{display:flex;align-items:center;gap:12px;}
-.test-av{
-  width:42px;height:42px;border-radius:50%;
-  border:2px solid var(--border-b);
-  background:var(--blue-dim);
-  display:flex;align-items:center;justify-content:center;
-  font-weight:800;font-size:15px;color:var(--blue-hi);
-  flex-shrink:0;
-}
-.test-name{font-weight:700;font-size:14px;color:var(--white);}
-.test-stars{color:#f97316;font-size:12px;margin-top:2px;letter-spacing:2px;}
-
-/* placeholder card */
-.test-add{
-  border:1.5px dashed var(--border);
-  border-radius:16px;
-  padding:30px 26px;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:10px;color:var(--muted);font-size:13px;text-align:center;min-height:160px;
+  font-size:18px;color:var(--blue-hi);
 }
 
 /* ─────────────────────────────────────────
@@ -882,50 +896,60 @@ footer{
   <div class="wrap">
     <div class="sec-label fi" style="text-align:center">Social Proof</div>
     <h2 class="sec-title fi" style="text-align:center">Creators Are Already<br/><span style="color:var(--blue-hi)">Breaking Free</span></h2>
+  </div>
 
-    <div class="test-grid">
-      <div class="test-card fi">
-        <div class="test-quote-icon">"</div>
-        <p class="test-q">I went from 280 average views to hitting 12K on my third video after following the warm-up protocol. Insane. I thought my account was just dead.</p>
-        <div class="test-foot">
-          <div class="test-av">J</div>
-          <div>
-            <div class="test-name">Jordan M.</div>
-            <div class="test-stars">★★★★★</div>
-          </div>
-        </div>
+  <!-- TICKER STRIP — keeps scrolling, never pauses on hover -->
+  <div class="test-ticker-track">
+    <div class="test-ticker-inner" id="test-ticker">
+
+      <!-- Replace src with your actual screenshot path -->
+      <div class="test-ticker-card">
+        <img src="assets/images/counterfeit-reviews/review7.webp" alt="Review" onerror="this.parentElement.innerHTML='<div class=\'tt-placeholder\'><div class=\'tt-plus\'>+</div><span>Add review screenshot</span></div>'"/>
+      </div>
+      <div class="test-ticker-card">
+        <img src="assets/images/counterfeit-reviews/review2.webp" alt="Review" onerror="this.parentElement.innerHTML='<div class=\'tt-placeholder\'><div class=\'tt-plus\'>+</div><span>Add review screenshot</span></div>'"/>
+      </div>
+      <div class="test-ticker-card">
+        <img src="assets/images/counterfeit-reviews/review3.webp" alt="Review" onerror="this.parentElement.innerHTML='<div class=\'tt-placeholder\'><div class=\'tt-plus\'>+</div><span>Add review screenshot</span></div>'"/>
+      </div>
+      <div class="test-ticker-card">
+        <img src="assets/images/counterfeit-reviews/review4.webp" alt="Review" onerror="this.parentElement.innerHTML='<div class=\'tt-placeholder\'><div class=\'tt-plus\'>+</div><span>Add review screenshot</span></div>'"/>
+      </div>
+      <div class="test-ticker-card">
+        <img src="assets/images/counterfeit-reviews/review5.webp" alt="Review" onerror="this.parentElement.innerHTML='<div class=\'tt-placeholder\'><div class=\'tt-plus\'>+</div><span>Add review screenshot</span></div>'"/>
+      </div>
+      <div class="test-ticker-card">
+        <img src="assets/images/counterfeit-reviews/review6.webp" alt="Review" onerror="this.parentElement.innerHTML='<div class=\'tt-placeholder\'><div class=\'tt-plus\'>+</div><span>Add review screenshot</span></div>'"/>
+      </div>
+      <div class="test-ticker-card">
+        <img src="assets/images/counterfeit-reviews/review8.webp" alt="Review" onerror="this.parentElement.innerHTML='<div class=\'tt-placeholder\'><div class=\'tt-plus\'>+</div><span>Add review screenshot</span></div>'"/>
+      </div>
+      <div class="test-ticker-card">
+        <img src="assets/images/counterfeit-reviews/review9.webp" alt="Review" onerror="this.parentElement.innerHTML='<div class=\'tt-placeholder\'><div class=\'tt-plus\'>+</div><span>Add review screenshot</span></div>'"/>
+      </div>
+      <div class="test-ticker-card">
+        <img src="assets/images/counterfeit-reviews/review10.webp" alt="Review" onerror="this.parentElement.innerHTML='<div class=\'tt-placeholder\'><div class=\'tt-plus\'>+</div><span>Add review screenshot</span></div>'"/>
+      </div>
+      <div class="test-ticker-card">
+        <img src="assets/images/counterfeit-reviews/review11.webp" alt="Review" onerror="this.parentElement.innerHTML='<div class=\'tt-placeholder\'><div class=\'tt-plus\'>+</div><span>Add review screenshot</span></div>'"/>
+      </div>
+      <div class="test-ticker-card">
+        <img src="assets/images/counterfeit-reviews/review12.webp" alt="Review" onerror="this.parentElement.innerHTML='<div class=\'tt-placeholder\'><div class=\'tt-plus\'>+</div><span>Add review screenshot</span></div>'"/>
+      </div>
+      <div class="test-ticker-card">
+        <img src="assets/images/counterfeit-reviews/review13.webp" alt="Review" onerror="this.parentElement.innerHTML='<div class=\'tt-placeholder\'><div class=\'tt-plus\'>+</div><span>Add review screenshot</span></div>'"/>
+      </div>
+      <div class="test-ticker-card">
+        <img src="assets/images/counterfeit-reviews/review14.webp" alt="Review" onerror="this.parentElement.innerHTML='<div class=\'tt-placeholder\'><div class=\'tt-plus\'>+</div><span>Add review screenshot</span></div>'"/>
+      </div>
+      <div class="test-ticker-card">
+        <img src="assets/images/counterfeit-reviews/review15.webp" alt="Review" onerror="this.parentElement.innerHTML='<div class=\'tt-placeholder\'><div class=\'tt-plus\'>+</div><span>Add review screenshot</span></div>'"/>
+      </div>
+      <div class="test-ticker-card">
+        <img src="assets/images/counterfeit-reviews/review16.webp" alt="Review" onerror="this.parentElement.innerHTML='<div class=\'tt-placeholder\'><div class=\'tt-plus\'>+</div><span>Add review screenshot</span></div>'"/>
       </div>
 
-      <div class="test-card fi">
-        <div class="test-quote-icon">"</div>
-        <p class="test-q">The algorithm update module alone was worth the price. Every time IG changes something I used to panic — now I just check the course and adapt.</p>
-        <div class="test-foot">
-          <div class="test-av">A</div>
-          <div>
-            <div class="test-name">Aisha T.</div>
-            <div class="test-stars">★★★★★</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="test-card fi">
-        <div class="test-quote-icon">"</div>
-        <p class="test-q">I've bought 4 other courses on growing on TikTok. This is the only one that actually explains the warm-up phase properly. Game changer.</p>
-        <div class="test-foot">
-          <div class="test-av">R</div>
-          <div>
-            <div class="test-name">Ryan K.</div>
-            <div class="test-stars">★★★★★</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Add more reviews below — copy a test-card block -->
-      <div class="test-add fi">
-        <span style="font-size:24px">+</span>
-        <span>More results coming in — yours could be next.</span>
-      </div>
-
+      <!-- duplicated automatically by JS for seamless loop -->
     </div>
   </div>
 </section>
@@ -954,7 +978,7 @@ footer{
         <div class="sr-price"><sup>$</sup>79</div>
         <div class="sr-note">Lifetime access · No subscription · Instant delivery</div>
         <div class="sr-urgency">⚡ +$10 next Monday — lock in $79 now</div>
-        <a href="https://whop.com/the-account-warm-up-blueprint/breakthejail/" target="_blank" class="btn-primary" style="display:block;text-align:center;font-size:16px;padding:18px 28px;">Get Instant Access on Whop →</a>
+        <a href="https://whop.com/joined/the-account-warm-up-blueprint/" target="_blank" class="btn-primary" style="display:block;text-align:center;font-size:16px;padding:18px 28px;">Get Instant Access on Whop →</a>
         <p style="font-size:11px;color:var(--muted);margin-top:12px;">Secure checkout via Whop · Immediate access</p>
       </div>
     </div>
@@ -1011,7 +1035,7 @@ footer{
 <div class="footer-cta">
   <h2>Stop Being<br/><span>Algorithm-Ignored.</span></h2>
   <p>The warm-up framework is ready. The question is whether you act before the price goes up next Monday.</p>
-  <a href="https://whop.com/the-account-warm-up-blueprint/breakthejail/" target="_blank" class="btn-primary">Get The Blueprint — $79 This Week</a>
+  <a href="https://whop.com/joined/the-account-warm-up-blueprint/" target="_blank" class="btn-primary">Get The Blueprint — $79 This Week</a>
 </div>
 
 <footer>
@@ -1078,6 +1102,12 @@ function draw(){
 }
 window.addEventListener('resize',resize);
 resize(); draw();
+
+/* TESTIMONIAL TICKER — duplicate content for seamless loop */
+const testTicker = document.getElementById('test-ticker');
+if (testTicker) {
+  testTicker.innerHTML += testTicker.innerHTML;
+}
 
 /* SCROLL FADE IN */
 const io = new IntersectionObserver(entries=>{
