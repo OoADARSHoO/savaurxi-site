@@ -61,45 +61,7 @@ body{
 }
 
 /* ─────────────────────────────────────────
-   URGENCY BAR
-───────────────────────────────────────── */
-.urgency-bar{
-  position:relative;z-index:200;
-  background:linear-gradient(90deg,#0c1a35,#0a2040,#0c1a35);
-  border-bottom:1px solid rgba(14,165,233,0.25);
-  padding:9px 16px;
-  text-align:center;
-  font-size:13px;font-weight:600;
-  color:var(--white);
-  letter-spacing:0.3px;
-  overflow:hidden;
-}
-.urgency-bar::before{
-  content:'';
-  position:absolute;inset:0;
-  background:linear-gradient(90deg,
-    transparent 0%,
-    rgba(14,165,233,0.08) 50%,
-    transparent 100%
-  );
-  animation:sweep 3s ease-in-out infinite;
-}
-@keyframes sweep{
-  0%{transform:translateX(-100%)}
-  100%{transform:translateX(100%)}
-}
-.urgency-bar .ub-inner{
-  display:flex;align-items:center;justify-content:center;gap:10px;
-  position:relative;z-index:1;flex-wrap:wrap;
-}
-.urgency-bar .fire{font-size:15px;animation:flicker 1.2s ease-in-out infinite alternate;}
-@keyframes flicker{from{transform:scale(1)}to{transform:scale(1.2)}}
-.urgency-bar .price-up{color:#f97316;font-weight:800;}
-.ub-dot{width:6px;height:6px;border-radius:50%;background:#f97316;display:inline-block;animation:pulse-dot 1.5s ease-in-out infinite;}
-@keyframes pulse-dot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:0.6}}
-
-/* ─────────────────────────────────────────
-   NAV
+   NAV (logo + timer + price/CTA in one bar)
 ───────────────────────────────────────── */
 nav{
   position:sticky;top:0;z-index:100;
@@ -115,9 +77,27 @@ nav{
     0 4px 40px rgba(0,0,0,0.5);
   padding:14px 28px;
   display:flex;align-items:center;justify-content:space-between;
+  gap:20px;
+  overflow:hidden;
+  position:relative;
+}
+nav::before{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(90deg,
+    transparent 0%,
+    rgba(14,165,233,0.06) 50%,
+    transparent 100%
+  );
+  animation:sweep 4s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes sweep{
+  0%{transform:translateX(-100%)}
+  100%{transform:translateX(100%)}
 }
 .nav-logo{
-  display:flex;align-items:center;gap:10px;
+  display:flex;align-items:center;gap:10px;flex-shrink:0;position:relative;z-index:1;
 }
 .nav-logo .logo-icon{
   width:34px;height:34px;
@@ -137,22 +117,65 @@ nav{
   font-weight:600;letter-spacing:1.5px;
   text-transform:uppercase;display:block;margin-top:1px;
 }
-.nav-right{display:flex;align-items:center;gap:14px;}
+
+/* center: timer */
+.nav-timer{
+  display:flex;align-items:center;gap:12px;flex-wrap:nowrap;
+  justify-content:center;position:relative;z-index:1;
+}
+.nav-timer-label{
+  font-size:12.5px;font-weight:700;
+  letter-spacing:0.3px;
+  color:var(--text);
+  white-space:nowrap;
+}
+.nav-timer-label .price-up{color:var(--orange);font-weight:800;}
+.ub-timer{
+  display:flex;align-items:center;gap:6px;
+}
+.ub-tseg{
+  display:flex;flex-direction:column;align-items:center;
+  background:rgba(14,165,233,0.10);
+  border:1px solid rgba(14,165,233,0.25);
+  border-radius:6px;
+  padding:4px 9px;
+  min-width:42px;
+}
+.ub-tseg .ub-tnum{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:17px;line-height:1;
+  color:var(--blue-hi);
+  font-variant-numeric:tabular-nums;
+}
+.ub-tseg .ub-tunit{
+  font-size:7px;letter-spacing:1px;text-transform:uppercase;
+  color:var(--muted);margin-top:1px;
+}
+.ub-tcolon{color:var(--blue-hi);font-size:14px;font-weight:700;margin:0 -2px;}
+
+.nav-right{display:flex;align-items:center;gap:14px;flex-shrink:0;position:relative;z-index:1;}
 .nav-price{
-  font-size:13px;color:var(--muted);font-weight:500;
+  font-size:13px;color:var(--muted);font-weight:500;white-space:nowrap;
 }
 .nav-price strong{color:var(--white);font-weight:800;}
 .nav-cta{
   background:linear-gradient(135deg,var(--blue),#0284c7);
   color:#fff;font-weight:700;font-size:14px;
   padding:10px 22px;border-radius:7px;
-  text-decoration:none;
+  text-decoration:none;white-space:nowrap;
   box-shadow:0 0 20px rgba(14,165,233,0.35);
   transition:transform 0.2s,box-shadow 0.2s;
 }
 .nav-cta:hover{
   transform:translateY(-1px);
   box-shadow:0 0 35px rgba(14,165,233,0.55);
+}
+
+@media(max-width:900px){
+  .nav-timer{display:none;}
+}
+@media(max-width:600px){
+  .nav-right .nav-price{display:none;}
 }
 
 /* ─────────────────────────────────────────
@@ -619,18 +642,7 @@ footer{
 <canvas id="cv"></canvas>
 <div class="glow-top"></div>
 
-<!-- ── URGENCY BAR ── -->
-<div class="urgency-bar">
-  <div class="ub-inner">
-    <span class="fire">🔥</span>
-    <span class="ub-dot"></span>
-    <span><span class="price-up">Price increases by $10 every week.</span> Currently <strong style="color:#fff;">$79</strong> — locks in at next week's price on Monday.</span>
-    <span class="ub-dot"></span>
-    <span class="fire">🔥</span>
-  </div>
-</div>
-
-<!-- ── NAV ── -->
+<!-- ── NAV (logo + timer + price/CTA) ── -->
 <nav>
   <div class="nav-logo">
     <div class="logo-icon">🚀</div>
@@ -639,6 +651,20 @@ footer{
       <span class="logo-sub">By Savaurxi</span>
     </div>
   </div>
+
+  <div class="nav-timer">
+    <span class="nav-timer-label"><span class="price-up">Price goes up $10</span> in:</span>
+    <div class="ub-timer" id="ub-timer">
+      <div class="ub-tseg"><span class="ub-tnum" id="t-days">00</span><span class="ub-tunit">Days</span></div>
+      <span class="ub-tcolon">:</span>
+      <div class="ub-tseg"><span class="ub-tnum" id="t-hours">00</span><span class="ub-tunit">Hrs</span></div>
+      <span class="ub-tcolon">:</span>
+      <div class="ub-tseg"><span class="ub-tnum" id="t-mins">00</span><span class="ub-tunit">Min</span></div>
+      <span class="ub-tcolon">:</span>
+      <div class="ub-tseg"><span class="ub-tnum" id="t-secs">00</span><span class="ub-tunit">Sec</span></div>
+    </div>
+  </div>
+
   <div class="nav-right">
     <div class="nav-price">Current price: <strong>$79</strong></div>
     <a href="#get-access" class="nav-cta">Get Access →</a>
@@ -927,7 +953,7 @@ footer{
         <div class="sr-price"><sup>$</sup>79</div>
         <div class="sr-note">Lifetime access · No subscription · Instant delivery</div>
         <div class="sr-urgency">⚡ +$10 next Monday — lock in $79 now</div>
-        <a href="https://whop.com/the-account-warm-up-blueprint/breakthejail/" target="_blank" class="btn-primary" style="display:block;text-align:center;font-size:16px;padding:18px 28px;">Get Instant Access on Whop →</a>
+        <a href="https://whop.com/joined/the-account-warm-up-blueprint/" target="_blank" class="btn-primary" style="display:block;text-align:center;font-size:16px;padding:18px 28px;">Get Instant Access on Whop →</a>
         <p style="font-size:11px;color:var(--muted);margin-top:12px;">Secure checkout via Whop · Immediate access</p>
       </div>
     </div>
@@ -992,6 +1018,35 @@ footer{
 </footer>
 
 <!-- ── SCRIPTS ── -->
+<script>
+/* COUNTDOWN — counts down to next Monday 00:00 (price increase moment) */
+function getNextMonday(){
+  const now = new Date();
+  const next = new Date(now);
+  const day = now.getDay(); // 0=Sun,1=Mon...
+  let daysUntilMonday = (8 - day) % 7;
+  if (daysUntilMonday === 0) daysUntilMonday = 7; // if today IS monday, target next monday
+  next.setDate(now.getDate() + daysUntilMonday);
+  next.setHours(0,0,0,0);
+  return next;
+}
+function updateCountdown(){
+  const target = getNextMonday();
+  const now = new Date();
+  let diff = target - now;
+  if (diff < 0) diff = 0;
+  const d = Math.floor(diff / (1000*60*60*24));
+  const h = Math.floor((diff / (1000*60*60)) % 24);
+  const m = Math.floor((diff / (1000*60)) % 60);
+  const s = Math.floor((diff / 1000) % 60);
+  const pad = n => String(n).padStart(2,'0');
+  const dE=document.getElementById('t-days'), hE=document.getElementById('t-hours'),
+        mE=document.getElementById('t-mins'), sE=document.getElementById('t-secs');
+  if(dE){dE.textContent=pad(d); hE.textContent=pad(h); mE.textContent=pad(m); sE.textContent=pad(s);}
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>
 <script>
 /* STARS */
 const cv = document.getElementById('cv');
