@@ -1,324 +1,625 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAVAURXI | Digital Infrastructure</title>
-    
-    <!-- Fonts: Syncopate for futuristic headers, Inter for clean tech body -->
+    <title>SAVAURXI | Digital Infrastructure For The Modern Internet</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syncopate:wght@400;700&display=swap"
+        rel="stylesheet">
 
     <style>
-        /* CSS VARIABLES */
         :root {
             --black: #000000;
-            --graphite: #0D0D0D;
-            --vader-red: #FF2D2D;
+            --graphite: #0B0B0B;
+            --panel: #0E0E0E;
+            --border-dark: #1E1E1E;
+            --vader-red: #FF3131;
             --crimson: #8B0000;
             --text-white: #FFFFFF;
-            --text-gray: #A0A0A0;
-            --border-dark: #222222;
+            --text-gray: #8C8C8C;
+            --text-dim: #5A5A5A;
         }
 
-        /* RESET & BASE */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            background-color: var(--black);
+            background: var(--black);
             color: var(--text-white);
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
-        h1, h2, h3, h4 {
+        h1,
+        h2,
+        h3,
+        h4 {
             font-family: 'Syncopate', sans-serif;
             text-transform: uppercase;
             font-weight: 700;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
         }
 
-        /* TYPOGRAPHY */
+        a {
+            color: inherit;
+        }
+
+        .eyebrow {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            color: var(--text-dim);
+            margin-bottom: 1.2rem;
+        }
+
         .section-title {
-            font-size: clamp(1.5rem, 4vw, 3rem);
-            margin-bottom: 1.5rem;
-            color: var(--text-white);
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            font-size: clamp(1.4rem, 3vw, 2.1rem);
+            margin-bottom: 0.6rem;
         }
 
         .section-subtitle {
-            font-size: clamp(1rem, 2vw, 1.2rem);
+            font-size: 0.95rem;
             color: var(--text-gray);
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto 4rem auto;
             font-weight: 300;
+            max-width: 480px;
         }
 
-        /* BUTTONS */
-        .cta-btn {
-            display: inline-block;
-            padding: 1rem 3rem;
-            background: transparent;
-            color: var(--text-white);
-            font-family: 'Syncopate', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 700;
-            text-decoration: none;
-            letter-spacing: 2px;
-            border: 1px solid var(--border-dark);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s ease;
-            cursor: pointer;
-            z-index: 1;
+        .center {
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .cta-btn::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: var(--vader-red);
-            z-index: -1;
-            transform: scaleY(0);
-            transform-origin: bottom;
-            transition: transform 0.4s ease;
-        }
-
-        .cta-btn:hover {
-            border-color: var(--vader-red);
-            box-shadow: 0 0 20px rgba(255, 45, 45, 0.4);
-            color: var(--black);
-        }
-
-        .cta-btn:hover::before {
-            transform: scaleY(1);
-        }
-
-        /* BACKGROUND EFFECTS */
+        /* BACKGROUND FX */
         .grid-bg {
             position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background-image: 
-                linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
+            inset: 0;
+            background-image:
+                linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 48px 48px;
             z-index: -2;
             pointer-events: none;
         }
 
         .ambient-glow {
             position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80vw; height: 80vh;
-            background: radial-gradient(circle, rgba(255,45,45,0.08) 0%, rgba(0,0,0,0) 70%);
+            top: 10%;
+            right: -10%;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, rgba(255, 49, 49, 0.10) 0%, rgba(0, 0, 0, 0) 70%);
             z-index: -1;
             pointer-events: none;
-            animation: pulse-glow 8s infinite alternate;
+            animation: pulse-glow 9s infinite alternate;
         }
 
-        /* ANIMATIONS */
         @keyframes pulse-glow {
-            0% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.9); }
-            100% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+            0% {
+                opacity: 0.5;
+                transform: scale(0.92);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1.08);
+            }
         }
 
         @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(45deg);
+            }
+
+            50% {
+                transform: translateY(-8px) rotate(45deg);
+            }
         }
 
-        @keyframes energy-spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes spin-slow {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
-        /* SECTIONS COMMON */
-        section {
-            padding: 8rem 5%;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        /* SCROLL REVEAL CLASSES */
         .reveal {
             opacity: 0;
-            transform: translateY(40px);
-            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(30px);
+            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
         }
+
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* --- HERO SECTION --- */
-        .hero {
-            height: 100vh;
-            justify-content: center;
-            padding-top: 0;
+        /* BUTTONS */
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.9rem 1.8rem;
+            background: rgba(255, 49, 49, 0.08);
+            color: var(--text-white);
+            font-family: 'Syncopate', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-decoration: none;
+            border: 1px solid rgba(255, 49, 49, 0.35);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.35s ease;
+            z-index: 1;
+            border-radius: 3px;
         }
 
-        .hero-logo-abstract {
-            width: 80px;
-            height: 80px;
-            border: 2px solid var(--vader-red);
-            transform: rotate(45deg);
-            margin: 0 auto 3rem auto;
+        .cta-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--vader-red);
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cta-btn:hover {
+            border-color: var(--vader-red);
+            color: var(--black);
+            box-shadow: 0 0 25px rgba(255, 49, 49, 0.35);
+        }
+
+        .cta-btn:hover::before {
+            transform: scaleX(1);
+        }
+
+        .cta-btn.ghost {
+            background: transparent;
+            border-color: var(--border-dark);
+            padding: 0.7rem 1.4rem;
+        }
+
+        .cta-btn.ghost:hover {
+            border-color: var(--vader-red);
+        }
+
+        /* NAVBAR */
+        .nav-glow {
+            position: fixed;
+            top: -120px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 900px;
+            height: 260px;
+            background: radial-gradient(ellipse, rgba(255, 49, 49, 0.28) 0%, rgba(255, 49, 49, 0) 70%);
+            filter: blur(20px);
+            z-index: 45;
+            pointer-events: none;
+        }
+
+        .navbar-wrap {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            display: flex;
+            justify-content: center;
+            padding: 1.1rem 5% 0;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            width: 100%;
+            max-width: 1050px;
+            padding: 0.6rem 0.7rem 0.6rem 1.2rem;
+            background: rgba(10, 8, 8, 0.55);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 999px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            text-decoration: none;
+        }
+
+        .brand-mark {
+            width: 24px;
+            height: 24px;
             position: relative;
-            box-shadow: 0 0 30px rgba(255, 45, 45, 0.5), inset 0 0 20px rgba(255, 45, 45, 0.2);
+            flex-shrink: 0;
+        }
+
+        .brand-mark .mark-core {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            right: 4px;
+            bottom: 4px;
+            border: 2px solid var(--vader-red);
+            box-shadow: 0 0 10px rgba(255, 49, 49, 0.9), inset 0 0 8px rgba(255, 49, 49, 0.35);
+            background: rgba(255, 49, 49, 0.06);
             animation: float 4s ease-in-out infinite;
         }
 
-        .hero-logo-abstract::after {
+        .brand-mark .mark-frame {
+            position: absolute;
+            inset: 0;
+            border: 1px solid rgba(255, 49, 49, 0.4);
+            animation: spin-slow 8s linear infinite;
+        }
+
+        .brand-name {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2.1rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            position: relative;
+            text-decoration: none;
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            font-weight: 500;
+            padding-bottom: 0.4rem;
+            transition: color 0.25s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-white);
+        }
+
+        .nav-links a.active {
+            color: var(--text-white);
+        }
+
+        .nav-links a::after {
             content: '';
             position: absolute;
-            top: -10px; left: -10px; right: -10px; bottom: -10px;
-            border: 1px solid rgba(255, 45, 45, 0.3);
-            animation: energy-spin 10s linear infinite;
+            bottom: -2px;
+            left: 50%;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--vader-red);
+            transform: translateX(-50%) scale(0);
+            box-shadow: 0 0 8px rgba(255, 49, 49, 0.9);
+            transition: transform 0.25s ease;
+        }
+
+        .nav-links a.active::after {
+            transform: translateX(-50%) scale(1);
+        }
+
+        .nav-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--crimson), var(--vader-red));
+            color: var(--text-white);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 18px rgba(255, 49, 49, 0.35);
+        }
+
+        .nav-cta:hover {
+            filter: brightness(1.12);
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 780px) {
+            .nav-links {
+                display: none;
+            }
+
+            .navbar {
+                padding: 0.55rem 0.55rem 0.55rem 1rem;
+            }
+        }
+
+        /* SECTIONS */
+        section {
+            padding: 6.5rem 5%;
+            position: relative;
+            scroll-margin-top: 6rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 92vh;
+            display: flex;
+            align-items: center;
+            padding-top: 3rem;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .hero h1 {
-            font-size: clamp(2rem, 5vw, 4.5rem);
-            margin-bottom: 1.5rem;
-            line-height: 1.1;
-            text-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            font-size: clamp(1.9rem, 4vw, 3rem);
+            line-height: 1.18;
+            margin-bottom: 1.3rem;
+        }
+
+        .hero h1 .dim {
+            color: var(--text-gray);
+            font-weight: 400;
         }
 
         .hero p {
-            font-size: clamp(1rem, 2vw, 1.2rem);
             color: var(--text-gray);
-            max-width: 700px;
-            margin: 0 auto 3rem auto;
-            line-height: 1.6;
+            font-weight: 300;
+            max-width: 460px;
+            margin-bottom: 2.4rem;
+            line-height: 1.7;
+            font-size: 0.98rem;
         }
 
-        /* --- SECTION 2: WHAT WE DO --- */
+        .hero-visual {
+            position: relative;
+            height: 380px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .visual-panel {
+            position: relative;
+            width: 100%;
+            height: 380px;
+            border: 1px solid var(--border-dark);
+            border-radius: 14px;
+            background:
+                linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+                radial-gradient(circle at 50% 45%, rgba(255, 49, 49, 0.10), rgba(0, 0, 0, 0) 65%);
+            background-size: 28px 28px, 28px 28px, 100% 100%;
+            background-color: #050505;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-stage {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-stage .glow-bloom {
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            background: radial-gradient(circle, rgba(255, 49, 49, 0.35), rgba(255, 49, 49, 0) 70%);
+            filter: blur(6px);
+        }
+
+        .logo-stage .stage-frame {
+            position: absolute;
+            width: 128px;
+            height: 128px;
+            border: 1px solid rgba(255, 49, 49, 0.4);
+            animation: spin-slow 8s linear infinite;
+        }
+
+        .logo-stage .stage-core {
+            position: absolute;
+            width: 96px;
+            height: 96px;
+            border: 3px solid var(--vader-red);
+            box-shadow: 0 0 30px rgba(255, 49, 49, 0.85), inset 0 0 25px rgba(255, 49, 49, 0.3);
+            background: rgba(255, 49, 49, 0.05);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .visual-caption {
+            position: absolute;
+            bottom: 1.4rem;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-family: 'Syncopate', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            color: var(--text-dim);
+        }
+
+        .visual-dot {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--vader-red);
+            box-shadow: 0 0 8px rgba(255, 49, 49, 0.9);
+            opacity: 0.8;
+        }
+
+        /* SECTION HEADER (centered sections) */
+        .head-center {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .head-center .section-subtitle {
+            margin: 0 auto;
+        }
+
+        /* SERVICES GRID */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            width: 100%;
-            max-width: 1200px;
-            margin-top: 2rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.2rem;
+            max-width: 1100px;
+            margin: 0 auto;
         }
 
         .service-card {
-            background: rgba(13, 13, 13, 0.6);
-            backdrop-filter: blur(10px);
+            background: var(--panel);
             border: 1px solid var(--border-dark);
-            padding: 3rem 2rem;
+            padding: 2rem 1.7rem;
             text-align: left;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 2px; height: 0%;
-            background: var(--vader-red);
-            transition: height 0.4s ease;
+            transition: all 0.35s ease;
+            border-radius: 4px;
         }
 
         .service-card:hover {
-            border-color: rgba(255, 45, 45, 0.3);
-            box-shadow: 0 10px 40px rgba(255, 45, 45, 0.05);
-            transform: translateY(-5px);
+            border-color: rgba(255, 49, 49, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(255, 49, 49, 0.06);
         }
 
-        .service-card:hover::before {
-            height: 100%;
+        .icon-box {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 49, 49, 0.4);
+            border-radius: 6px;
+            margin-bottom: 1.3rem;
+            background: rgba(255, 49, 49, 0.06);
         }
 
-        .service-icon {
-            color: var(--vader-red);
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 0 10px rgba(255, 45, 45, 0.4);
+        .icon-box svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--vader-red);
         }
 
         .service-card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-            color: var(--text-white);
+            font-size: 0.85rem;
+            margin-bottom: 0.7rem;
+            letter-spacing: 1px;
+            line-height: 1.4;
         }
 
         .service-card p {
             color: var(--text-gray);
-            font-size: 0.95rem;
+            font-size: 0.85rem;
+            font-weight: 300;
             line-height: 1.5;
         }
 
-        /* --- SECTION 3: FOR CREATORS --- */
-        .creators-section {
+        /* AUDIENCE SECTION */
+        .audience-section {
             background: linear-gradient(to bottom, var(--black), var(--graphite), var(--black));
-            border-top: 1px solid rgba(255,45,45,0.1);
-            border-bottom: 1px solid rgba(255,45,45,0.1);
+            border-top: 1px solid rgba(255, 49, 49, 0.08);
+            border-bottom: 1px solid rgba(255, 49, 49, 0.08);
+            text-align: center;
         }
 
-        .creators-content {
-            max-width: 800px;
-            margin: 0 auto;
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            max-width: 900px;
+            margin: 3rem auto 3rem;
+            text-align: left;
         }
 
-        .highlight-text {
-            color: var(--vader-red);
-            font-style: italic;
-        }
-
-        .tag-grid {
+        .audience-item {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem;
-            margin: 3rem 0;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.9rem;
         }
 
-        .tag {
-            padding: 0.5rem 1.5rem;
-            border: 1px solid var(--border-dark);
-            border-radius: 50px;
-            font-size: 0.85rem;
+        .audience-item h4 {
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .audience-item p {
             color: var(--text-gray);
-            font-family: 'Syncopate', sans-serif;
-            background: rgba(0,0,0,0.5);
+            font-size: 0.85rem;
+            font-weight: 300;
+            line-height: 1.5;
         }
 
-        /* --- SECTION 4: THE SAVAURXI SYSTEM --- */
+        /* SYSTEM SECTION */
+        .system-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3.5rem;
+            max-width: 1100px;
+            margin: 3rem auto 0;
+            align-items: center;
+        }
+
         .timeline {
             position: relative;
-            max-width: 800px;
-            margin: 4rem auto 0;
-            text-align: left;
         }
 
         .timeline::before {
             content: '';
             position: absolute;
-            left: 20px;
-            top: 0;
-            bottom: 0;
+            left: 16px;
+            top: 6px;
+            bottom: 6px;
             width: 1px;
             background: var(--border-dark);
         }
 
         .timeline-step {
             position: relative;
-            padding-left: 60px;
-            margin-bottom: 4rem;
+            padding-left: 56px;
+            margin-bottom: 2.4rem;
         }
 
         .timeline-step:last-child {
@@ -328,263 +629,620 @@
         .step-number {
             position: absolute;
             left: 0;
-            top: 0;
+            top: -4px;
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-family: 'Syncopate', sans-serif;
+            font-size: 0.7rem;
             color: var(--vader-red);
-            font-weight: 700;
+            border: 1px solid rgba(255, 49, 49, 0.4);
             background: var(--black);
-            padding-bottom: 10px;
-            text-shadow: 0 0 10px rgba(255,45,45,0.3);
+            border-radius: 4px;
         }
 
         .timeline-step h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+            margin-bottom: 0.35rem;
+            letter-spacing: 1px;
         }
 
-        /* --- SECTION 5: WHY SAVAURXI --- */
+        .timeline-step p {
+            color: var(--text-gray);
+            font-size: 0.82rem;
+            font-weight: 300;
+            line-height: 1.5;
+        }
+
+        .stat-panel {
+            background: var(--panel);
+            border: 1px solid var(--border-dark);
+            border-radius: 8px;
+            padding: 1.6rem;
+        }
+
+        .stat-panel .row-label {
+            font-size: 0.68rem;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+            font-family: 'Syncopate', sans-serif;
+            margin-bottom: 0.4rem;
+        }
+
+        .stat-panel .big-num {
+            font-size: 1.9rem;
+            font-weight: 600;
+            color: var(--vader-red);
+            margin-bottom: 1.2rem;
+        }
+
+        .stat-panel .big-num span {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            font-weight: 400;
+            margin-left: 0.4rem;
+        }
+
+        .sparkline {
+            width: 100%;
+            height: 60px;
+            margin-bottom: 1.4rem;
+        }
+
+        .divider-line {
+            border-top: 1px solid var(--border-dark);
+            margin: 1.2rem 0;
+        }
+
+        .rev-row {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 1.4rem;
+        }
+
+        .rev-row .amount {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .rev-row .delta {
+            color: #4ADE80;
+            font-size: 0.78rem;
+        }
+
+        .progress-item {
+            margin-bottom: 0.9rem;
+        }
+
+        .progress-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            margin-bottom: 0.4rem;
+        }
+
+        .progress-track {
+            height: 5px;
+            background: var(--border-dark);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--crimson), var(--vader-red));
+            border-radius: 3px;
+        }
+
+        /* WHY / STATS */
         .why-section {
             text-align: center;
         }
 
-        .why-grid {
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 2rem;
-            max-width: 1000px;
-            margin-top: 3rem;
-            text-align: center;
+            max-width: 900px;
+            margin: 3rem auto 0;
         }
 
-        @media (max-width: 768px) {
-            .why-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .why-item h4 {
+        .stat-item .num {
+            font-family: 'Syncopate', sans-serif;
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
             color: var(--vader-red);
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 25px rgba(255, 49, 49, 0.3);
         }
 
-        /* --- SECTION 6: CONTACT --- */
+        .stat-item .label {
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            font-family: 'Syncopate', sans-serif;
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-item .sub {
+            color: var(--text-dim);
+            font-size: 0.75rem;
+            font-weight: 300;
+        }
+
+        /* CONTACT */
         .contact-section {
-            min-height: 60vh;
-            justify-content: center;
-            background: radial-gradient(circle at bottom, rgba(255,45,45,0.05) 0%, var(--black) 50%);
+            text-align: center;
+            background: radial-gradient(circle at 50% 100%, rgba(255, 49, 49, 0.08) 0%, var(--black) 55%);
         }
 
         .contact-links {
             display: flex;
-            gap: 2rem;
-            margin-top: 3rem;
+            justify-content: center;
+            gap: 1.2rem;
+            margin: 2.6rem 0 2.6rem;
         }
 
         .social-btn {
+            width: 52px;
+            height: 52px;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 60px; height: 60px;
             border: 1px solid var(--border-dark);
             border-radius: 50%;
-            color: var(--text-white);
-            text-decoration: none;
-            font-size: 1.5rem;
+            background: var(--panel);
             transition: all 0.3s ease;
-            background: var(--graphite);
+            text-decoration: none;
+        }
+
+        .social-btn svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--text-white);
         }
 
         .social-btn:hover {
             border-color: var(--vader-red);
-            box-shadow: 0 0 20px rgba(255, 45, 45, 0.3);
-            color: var(--vader-red);
-            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(255, 49, 49, 0.3);
+            transform: translateY(-4px);
         }
 
-        .email-placeholder {
-            margin-top: 3rem;
-            font-family: 'Syncopate', sans-serif;
-            color: var(--text-gray);
+        .social-btn:hover svg {
+            stroke: var(--vader-red);
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--border-dark);
+            padding: 2rem 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        footer .brand-mark {
+            width: 20px;
+            height: 20px;
+        }
+
+        footer .brand-mark .mark-core {
+            top: 3px;
+            left: 3px;
+            right: 3px;
+            bottom: 3px;
+        }
+
+        footer .brand-name {
             font-size: 0.8rem;
-            letter-spacing: 2px;
+        }
+
+        footer .foot-meta {
+            color: var(--text-dim);
+            font-size: 0.72rem;
+            letter-spacing: 1px;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        footer .foot-meta a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.25s ease;
+        }
+
+        footer .foot-meta a:hover {
+            color: var(--vader-red);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-visual {
+                order: -1;
+                height: 260px;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .audience-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .system-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2.5rem;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 4.5rem 6%;
+            }
+
+            .navbar {
+                padding: 1.1rem 6%;
+            }
         }
     </style>
 </head>
+
 <body>
 
-    <!-- Ambient Background Elements -->
     <div class="grid-bg"></div>
     <div class="ambient-glow"></div>
 
-    <!-- HERO SECTION -->
-    <section class="hero reveal">
-        <div class="hero-logo-abstract"></div>
-        <h1>Digital Infrastructure<br>For The Modern Internet</h1>
-        <p>We build, launch, market, and scale digital products engineered to generate attention, authority, and revenue.</p>
-        <a href="#contact" class="cta-btn">GET IN TOUCH</a>
-    </section>
+    <div class="nav-glow"></div>
+    <div class="navbar-wrap">
+        <nav class="navbar">
+            <a href="#" class="brand">
+                <span class="brand-name">SAVAURXI</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#" class="active" data-section="hero">Home</a></li>
+                <li><a href="#services" data-section="services">Services</a></li>
+                <li><a href="#system" data-section="system">System</a></li>
+                <li><a href="#contact" data-section="contact">Contact</a></li>
+            </ul>
+            <a href="#contact" class="nav-cta">Work With Us ↗</a>
+        </nav>
+    </div>
 
-    <!-- SECTION 2: WHAT WE DO -->
-    <section class="reveal">
-        <h2 class="section-title">Behind The Scenes</h2>
-        <p class="section-subtitle">Operating as the hidden infrastructure layer for elite digital businesses.</p>
-        
-        <div class="services-grid">
-            <div class="service-card">
-                <div class="service-icon">✦</div>
-                <h3>Digital Product Development</h3>
-                <p>We transform isolated knowledge into scalable, high-leverage digital assets.</p>
+    <!-- HERO -->
+    <section id="hero" class="hero reveal">
+        <div class="hero-grid">
+            <div>
+                <div class="eyebrow">WE BUILD. WE SCALE. WE OWN THE INFRASTRUCTURE.</div>
+                <h1>DIGITAL INFRASTRUCTURE<br><span class="dim">FOR THE MODERN INTERNET.</span></h1>
+                <p>We build the systems behind digital products and brands that scale — from the product to the
+                    infrastructure that powers their growth.</p>
+                <a href="#contact" class="cta-btn">WORK WITH US →</a>
             </div>
-            <div class="service-card">
-                <div class="service-icon">⎔</div>
-                <h3>Funnel Systems</h3>
-                <p>High-converting infrastructures engineered specifically for modern audience psychology.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">◈</div>
-                <h3>Creator Monetization</h3>
-                <p>We help creators transition from pure attention to highly predictable revenue ecosystems.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">◬</div>
-                <h3>Marketing & Distribution</h3>
-                <p>Precision-engineered campaigns architected for maximum scale and conversion.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">▱</div>
-                <h3>Brand Positioning</h3>
-                <p>We construct undeniable authority systems designed to completely dominate niches.</p>
+            <div class="hero-visual">
+                <div class="visual-panel">
+                    <span class="visual-dot" style="top:18%; left:14%;"></span>
+                    <span class="visual-dot" style="top:70%; left:22%;"></span>
+                    <span class="visual-dot" style="top:28%; left:82%;"></span>
+                    <span class="visual-dot" style="top:76%; left:78%;"></span>
+                    <div class="logo-stage">
+                        <div class="glow-bloom"></div>
+                        <div class="stage-frame"></div>
+                        <div class="stage-core"></div>
+                    </div>
+                    <div class="visual-caption">BUILD · SCALE · OWN</div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- SECTION 3: FOR CREATORS -->
-    <section class="creators-section reveal">
-        <div class="creators-content">
+    <!-- BEHIND THE SCENES -->
+    <section id="services" class="reveal">
+        <div class="container">
+            <div class="head-center">
+                <h2 class="section-title">Behind The Scenes</h2>
+                <p class="section-subtitle center">Everything we build. Everything we handle.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <rect x="6" y="6" width="12" height="12" transform="rotate(45 12 12)"></rect>
+                        </svg></div>
+                    <h3>DIGITAL PRODUCT DEVELOPMENT</h3>
+                    <p>We build digital products that solve real problems and are built to scale.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M12 2 L21 7 V17 L12 22 L3 17 V7 Z"></path>
+                        </svg></div>
+                    <h3>LANDING PAGES THAT CONVERT</h3>
+                    <p>High-converting, fast, modern landing pages that turn traffic into revenue.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                            <path d="M3 9h18"></path>
+                            <circle cx="8" cy="14" r="1.5"></circle>
+                        </svg></div>
+                    <h3>PAYMENT INFRASTRUCTURE</h3>
+                    <p>Secure, seamless payment systems that just work. Globally.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <rect x="6" y="6" width="12" height="12" transform="rotate(45 12 12)"></rect>
+                        </svg></div>
+                    <h3>PRODUCT MANAGEMENT</h3>
+                    <p>From ideation to iteration. We manage, optimize and scale your product.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <path d="M21 15l-5-5-9 9"></path>
+                        </svg></div>
+                    <h3>SOCIAL MEDIA GROWTH</h3>
+                    <p>We build and grow social media accounts with proven infrastructure and content systems.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                            <path d="M8 12l3 3 5-6"></path>
+                        </svg></div>
+                    <h3>GROWTH INFRASTRUCTURE</h3>
+                    <p>Our systems, workflows and tools are built for scale and consistency.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AUDIENCE -->
+    <section class="audience-section reveal">
+        <div class="container">
             <h2 class="section-title">Already Have An Audience?</h2>
-            <p class="section-subtitle" style="margin-bottom: 2rem;">If you possess an audience, raw expertise, or a targeted niche — we deploy and manage the systems operating entirely in the background.</p>
-            
-            <div class="tag-grid">
-                <span class="tag">Product Creation</span>
-                <span class="tag">Funnel Building</span>
-                <span class="tag">Sales Systems</span>
-                <span class="tag">Marketing</span>
-                <span class="tag">Distribution</span>
-                <span class="tag">Automation</span>
+            <p class="section-subtitle center">We plug into your ecosystem and help you scale it to the next level.</p>
+
+            <div class="audience-grid">
+                <div class="audience-item">
+                    <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <rect x="6" y="6" width="12" height="12" transform="rotate(45 12 12)"></rect>
+                        </svg></div>
+                    <h4>MONETIZATION SYSTEMS</h4>
+                    <p>Turn your audience into sustainable revenue.</p>
+                </div>
+                <div class="audience-item">
+                    <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <circle cx="6" cy="6" r="2.2"></circle>
+                            <circle cx="18" cy="6" r="2.2"></circle>
+                            <circle cx="12" cy="18" r="2.2"></circle>
+                            <path d="M7.8 7.4l3 8.6M16.2 7.4l-3 8.6M8 6h8"></path>
+                        </svg></div>
+                    <h4>GROWTH ENGINE</h4>
+                    <p>Scale with content, funnels and paid or organic systems.</p>
+                </div>
+                <div class="audience-item">
+                    <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M21 12a9 9 0 1 1-3-6.7"></path>
+                            <path d="M21 4v5h-5"></path>
+                        </svg></div>
+                    <h4>AUTOMATION LAYER</h4>
+                    <p>We automate the repetitive so you focus on growth.</p>
+                </div>
             </div>
 
-            <h3 style="margin-bottom: 3rem; font-size: 1.2rem; color: var(--text-white);">
-                "You focus on influence. <span class="highlight-text">We engineer the infrastructure.</span>"
-            </h3>
-            
-            <a href="#contact" class="cta-btn">WORK WITH US</a>
+            <a href="#contact" class="cta-btn ghost">LET'S BUILD TOGETHER →</a>
         </div>
     </section>
 
-    <!-- SECTION 4: THE SAVAURXI SYSTEM -->
-    <section class="reveal">
-        <h2 class="section-title">The Savaurxi System</h2>
-        <p class="section-subtitle">A calculated, multi-stage protocol for digital dominance.</p>
+    <!-- SYSTEM -->
+    <section id="system" class="reveal">
+        <div class="container">
+            <div class="head-center">
+                <h2 class="section-title">The Savaurxi System</h2>
+                <p class="section-subtitle center">Our proven process to build, grow and scale.</p>
+            </div>
 
-        <div class="timeline">
-            <div class="timeline-step">
-                <div class="step-number">01</div>
-                <h3>Strategy</h3>
-                <p style="color: var(--text-gray); font-size: 0.95rem;">Auditing the market landscape and mapping the operational blueprint.</p>
-            </div>
-            <div class="timeline-step">
-                <div class="step-number">02</div>
-                <h3>Product Engineering</h3>
-                <p style="color: var(--text-gray); font-size: 0.95rem;">Forging high-value digital assets designed for immediate market fit.</p>
-            </div>
-            <div class="timeline-step">
-                <div class="step-number">03</div>
-                <h3>Funnel Architecture</h3>
-                <p style="color: var(--text-gray); font-size: 0.95rem;">Building the conversion mechanism to seamlessly capture and close.</p>
-            </div>
-            <div class="timeline-step">
-                <div class="step-number">04</div>
-                <h3>Audience Conversion</h3>
-                <p style="color: var(--text-gray); font-size: 0.95rem;">Deploying psychological frameworks that turn passive views into equity.</p>
-            </div>
-            <div class="timeline-step">
-                <div class="step-number">05</div>
-                <h3>Scaling Infrastructure</h3>
-                <p style="color: var(--text-gray); font-size: 0.95rem;">Automating the entire ecosystem for ruthless, unchecked growth.</p>
+            <div class="system-layout">
+                <div class="timeline">
+                    <div class="timeline-step">
+                        <div class="step-number">01</div>
+                        <h3>DISCOVER</h3>
+                        <p>We analyze, research and understand your goals.</p>
+                    </div>
+                    <div class="timeline-step">
+                        <div class="step-number">02</div>
+                        <h3>PLAN &amp; STRATEGIZE</h3>
+                        <p>We build a custom strategy and infrastructure.</p>
+                    </div>
+                    <div class="timeline-step">
+                        <div class="step-number">03</div>
+                        <h3>BUILD &amp; LAUNCH</h3>
+                        <p>We build, test and launch with precision.</p>
+                    </div>
+                    <div class="timeline-step">
+                        <div class="step-number">04</div>
+                        <h3>GROW &amp; OPTIMIZE</h3>
+                        <p>We grow, analyze and optimize for scale.</p>
+                    </div>
+                    <div class="timeline-step">
+                        <div class="step-number">05</div>
+                        <h3>MANAGE &amp; SCALE</h3>
+                        <p>We manage the system and scale it further.</p>
+                    </div>
+                </div>
+
+                <div class="stat-panel">
+                    <div class="row-label">GROWTH OVERVIEW</div>
+                    <div class="big-num">+248% <span>vs last 30 days</span></div>
+                    <svg class="sparkline" viewBox="0 0 300 60" preserveAspectRatio="none">
+                        <polyline
+                            points="0,45 25,42 50,38 75,40 100,30 125,32 150,20 175,24 200,15 225,18 250,8 275,10 300,4"
+                            fill="none" stroke="#FF3131" stroke-width="2"></polyline>
+                    </svg>
+                    <div class="divider-line"></div>
+                    <div class="row-label">REVENUE OVERVIEW</div>
+                    <div class="rev-row">
+                        <span class="amount">$120,980</span>
+                        <span class="delta">+32.4%</span>
+                    </div>
+                    <div class="row-label">ACTIVE PROJECTS</div>
+                    <div class="progress-item">
+                        <div class="progress-label"><span>Digital Products</span><span>85%</span></div>
+                        <div class="progress-track">
+                            <div class="progress-fill" style="width:85%"></div>
+                        </div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-label"><span>Social Media Growth</span><span>78%</span></div>
+                        <div class="progress-track">
+                            <div class="progress-fill" style="width:78%"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- SECTION 5: WHY SAVAURXI -->
+    <!-- WHY -->
     <section class="why-section reveal">
-        <h2 class="section-title" style="font-size: clamp(1.5rem, 3vw, 2.5rem);">Built Like A Tech Company.<br>Operated Like A Media Empire.</h2>
-        <p class="section-subtitle">We do not guess. Every asset, every word, and every pixel is deployed with calculating precision to maximize conversion optimization and command market positioning.</p>
+        <div class="container">
+            <h2 class="section-title" style="font-size:clamp(1.3rem,2.6vw,2rem)">Built Like A Tech Company.<br>Operated
+                Like A Media Empire.</h2>
+            <p class="section-subtitle center" style="max-width:600px">We combine technology, creativity and systems to
+                build digital assets that generate revenue and dominate attention.</p>
 
-        <div class="why-grid">
-            <div class="why-item">
-                <h4>Precision</h4>
-                <p style="color: var(--text-gray); font-size: 0.9rem;">Eliminating friction points through rigorous data analysis.</p>
-            </div>
-            <div class="why-item">
-                <h4>Scalability</h4>
-                <p style="color: var(--text-gray); font-size: 0.9rem;">Systems engineered to handle exponential volume without breaking.</p>
-            </div>
-            <div class="why-item">
-                <h4>Psychology</h4>
-                <p style="color: var(--text-gray); font-size: 0.9rem;">Leveraging deep human behavioral triggers to drive action.</p>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="num">10+</div>
+                    <div class="label">PRODUCTS BUILT</div>
+                    <div class="sub">Digital products launched and scaled.</div>
+                </div>
+                <div class="stat-item">
+                    <div class="num">50M+</div>
+                    <div class="label">AUDIENCE REACHED</div>
+                    <div class="sub">Across platforms and accounts.</div>
+                </div>
+                <div class="stat-item">
+                    <div class="num">$1M+</div>
+                    <div class="label">REVENUE GENERATED</div>
+                    <div class="sub">For ourselves and our clients.</div>
+                </div>
+                <div class="stat-item">
+                    <div class="num">100%</div>
+                    <div class="label">SYSTEMS OWNED</div>
+                    <div class="sub">We build our own tools and infra.</div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- SECTION 6: CONTACT -->
+    <!-- CONTACT -->
     <section id="contact" class="contact-section reveal">
-        <h2 class="section-title">Initiate Protocol</h2>
-        <p class="section-subtitle" style="margin-bottom: 0;">Interested in building with SAVAURXI?</p>
+        <div class="container">
+            <h2 class="section-title">Initiate Protocol</h2>
+            <p class="section-subtitle center">Let's build your empire.</p>
 
-        <div class="contact-links">
-            <!-- Using simple unicode icons, replace with SVG/FontAwesome as needed -->
-            <a href="#" class="social-btn" title="Instagram">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-            </a>
-            <a href="#" class="social-btn" title="WhatsApp">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-            </a>
-        </div>
+            <div class="contact-links">
+                <a href="#" class="social-btn" title="Telegram">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2">
+                        <path d="M22 2 11 13"></path>
+                        <path d="M22 2 15 22l-4-9-9-4 20-7Z"></path>
+                    </svg>
+                </a>
+                <a href="#" class="social-btn" title="Email">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2">
+                        <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                        <path d="m2 7 10 6 10-6"></path>
+                    </svg>
+                </a>
+                <a href="#" class="social-btn" title="Book a Call">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2">
+                        <rect x="3" y="5" width="18" height="16" rx="2"></rect>
+                        <path d="M16 3v4M8 3v4M3 10h18"></path>
+                    </svg>
+                </a>
+            </div>
 
-        <div class="email-placeholder">
-            SECURE.COMMUNICATIONS@SAVAURXI.TECH
+            <a href="mailto:secure.communications@savaurxi.tech" class="cta-btn">WORK WITH US →</a>
         </div>
     </section>
 
-    <!-- JAVASCRIPT FOR SCROLL REVEAL (Cinematic Fades) -->
+    <footer>
+        <a href="#" class="brand">
+            <span class="brand-name">SAVAURXI</span>
+        </a>
+        <div class="foot-meta">
+            <a href="https://www.savaurxi.tech/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>
+            <a href="https://www.savaurxi.tech/t&c" target="_blank" rel="noopener">Terms &amp; Conditions</a>
+            <span>© 2026 Savaurxi. All rights reserved.</span>
+            <span>BUILT DIFFERENT. BUILT TO LAST.</span>
+        </div>
+    </footer>
+
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const reveals = document.querySelectorAll(".reveal");
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add("active");
+                });
+            }, { threshold: 0.12 });
+            reveals.forEach(el => io.observe(el));
+            setTimeout(() => reveals[0].classList.add("active"), 80);
 
-            const revealOnScroll = new IntersectionObserver((entries, observer) => {
+            // Scrollspy for pill navbar
+            const navLinks = document.querySelectorAll(".nav-links a");
+            const navSections = ["hero", "services", "system", "contact"]
+                .map(id => document.getElementById(id))
+                .filter(Boolean);
+
+            const spyIO = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        entry.target.classList.add("active");
-                        // Optional: Stop observing once revealed
-                        // observer.unobserve(entry.target); 
+                        const id = entry.target.id;
+                        navLinks.forEach(link => {
+                            link.classList.toggle("active", link.dataset.section === id);
+                        });
                     }
                 });
-            }, {
-                root: null,
-                threshold: 0.15, // Trigger when 15% of the element is visible
-                rootMargin: "0px"
-            });
+            }, { rootMargin: "-40% 0px -50% 0px", threshold: 0 });
 
-            reveals.forEach(reveal => {
-                revealOnScroll.observe(reveal);
-            });
-            
-            // Immediately trigger for elements already in viewport on load
-            setTimeout(() => {
-                reveals[0].classList.add("active");
-            }, 100);
+            navSections.forEach(sec => spyIO.observe(sec));
         });
     </script>
+
 </body>
+
 </html>
