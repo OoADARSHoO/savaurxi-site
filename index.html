@@ -961,6 +961,8 @@
             letter-spacing: 0.5px;
             text-transform: uppercase;
             transition: all 0.25s ease;
+            cursor: pointer;
+            outline: none;
         }
 
         .quick-btn svg {
@@ -998,6 +1000,90 @@
         .quick-btn:hover .letter-mark {
             border-color: var(--vader-red);
             color: var(--vader-red);
+        }
+
+        /* EMAIL POPOVER STYLE */
+        .email-popover-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        .email-popover-wrapper .quick-btn {
+            width: 100%;
+        }
+
+        .email-popover {
+            position: absolute;
+            bottom: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%) translateY(5px);
+            background: rgba(15, 14, 14, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-dark);
+            border-radius: 8px;
+            padding: 6px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: none;
+            opacity: 0;
+            flex-direction: column;
+            gap: 4px;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            z-index: 100;
+            width: 180px;
+        }
+
+        .email-popover.active {
+            display: flex;
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .email-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.6rem;
+            border-radius: 6px;
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 0.68rem;
+            font-family: 'Syncopate', sans-serif;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            width: 100%;
+            transition: all 0.2s ease;
+        }
+
+        .email-option:hover {
+            background: rgba(255, 49, 49, 0.08);
+            color: var(--text-white);
+        }
+
+        .email-option svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--text-white);
+            flex-shrink: 0;
+        }
+
+        .email-option:hover svg {
+            stroke: var(--vader-red);
+        }
+
+        .email-popover::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 6px;
+            border-style: solid;
+            border-color: rgba(15, 14, 14, 0.95) transparent transparent transparent;
         }
 
         .modal-form label {
@@ -1484,14 +1570,39 @@
                     </svg>
                     Telegram
                 </a>
-                <a class="quick-btn" href="mailto:adarsh2006.9@gmail.com" title="Email">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2">
-                        <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-                        <path d="m2 7 10 6 10-6"></path>
-                    </svg>
-                    Mail
-                </a>
+                <div class="email-popover-wrapper">
+                    <button type="button" class="quick-btn" id="mail-quick-btn" title="Email">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2">
+                            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                            <path d="m2 7 10 6 10-6"></path>
+                        </svg>
+                        Mail
+                    </button>
+                    <div class="email-popover" id="email-popover">
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=adarsh2006.9@gmail.com" target="_blank" rel="noopener" class="email-option">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            Gmail
+                        </a>
+                        <a href="mailto:adarsh2006.9@gmail.com" class="email-option">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                                <path d="m2 7 10 6 10-6"></path>
+                            </svg>
+                            Default App
+                        </a>
+                        <button type="button" id="copy-email-btn" class="email-option">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copy Email
+                        </button>
+                    </div>
+                </div>
                 <a class="quick-btn" href="https://wa.me/917736697402" target="_blank" rel="noopener" title="WhatsApp">
                     <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"
                         stroke-width="2">
@@ -1667,6 +1778,53 @@
                     submitBtn.textContent = "SEND MESSAGE →";
                 }
             });
+
+            // Email Popover toggle
+            const mailBtn = document.getElementById("mail-quick-btn");
+            const emailPopover = document.getElementById("email-popover");
+            const copyEmailBtn = document.getElementById("copy-email-btn");
+
+            if (mailBtn && emailPopover) {
+                mailBtn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    emailPopover.classList.toggle("active");
+                });
+
+                // Close popover when clicking outside
+                document.addEventListener("click", (e) => {
+                    if (!emailPopover.contains(e.target) && e.target !== mailBtn) {
+                        emailPopover.classList.remove("active");
+                    }
+                });
+
+                // Copy to clipboard function
+                if (copyEmailBtn) {
+                    copyEmailBtn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        const email = "adarsh2006.9@gmail.com";
+                        navigator.clipboard.writeText(email).then(() => {
+                            const originalContent = copyEmailBtn.innerHTML;
+                            copyEmailBtn.innerHTML = `
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#3ddc84" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                Copied!
+                            `;
+                            copyEmailBtn.style.color = "#3ddc84";
+                            setTimeout(() => {
+                                copyEmailBtn.innerHTML = originalContent;
+                                copyEmailBtn.style.color = "";
+                                emailPopover.classList.remove("active");
+                            }, 1500);
+                        }).catch(err => {
+                            console.error("Could not copy text: ", err);
+                        });
+                    });
+                }
+            }
         });
     </script>
 
