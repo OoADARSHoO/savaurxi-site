@@ -153,6 +153,17 @@
         }
 
         /* BUTTONS */
+        button.cta-btn,
+        button.nav-cta {
+            appearance: none;
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        button.nav-cta {
+            font-family: 'Inter', sans-serif;
+        }
+
         .cta-btn {
             display: inline-flex;
             align-items: center;
@@ -840,6 +851,248 @@
             stroke: var(--vader-red);
         }
 
+        /* CONTACT MODAL */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: rgba(0, 0, 0, 0.72);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-panel {
+            position: relative;
+            width: 100%;
+            max-width: 460px;
+            max-height: 90vh;
+            overflow-y: auto;
+            background: var(--panel);
+            border: 1px solid var(--border-dark);
+            border-radius: 14px;
+            padding: 2.2rem 2rem 2rem;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 40px rgba(255, 49, 49, 0.08);
+            transform: translateY(24px) scale(0.98);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .modal-overlay.active .modal-panel {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 1px solid var(--border-dark);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+            line-height: 1;
+            transition: all 0.25s ease;
+        }
+
+        .modal-close:hover {
+            border-color: var(--vader-red);
+            color: var(--vader-red);
+        }
+
+        .modal-title {
+            font-family: 'Syncopate', sans-serif;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 1.15rem;
+            letter-spacing: 1px;
+            padding-right: 2rem;
+            margin-bottom: 0.7rem;
+        }
+
+        .modal-subtitle {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-quicklinks {
+            display: flex;
+            gap: 0.7rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .quick-btn {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.75rem 0.4rem;
+            border: 1px solid var(--border-dark);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            text-decoration: none;
+            color: var(--text-gray);
+            font-size: 0.62rem;
+            font-family: 'Syncopate', sans-serif;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            transition: all 0.25s ease;
+        }
+
+        .quick-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--text-white);
+        }
+
+        .quick-btn .letter-mark {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 1.5px solid var(--text-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: var(--text-white);
+            letter-spacing: 0;
+        }
+
+        .quick-btn:hover {
+            border-color: var(--vader-red);
+            color: var(--text-white);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 49, 49, 0.25);
+        }
+
+        .quick-btn:hover svg {
+            stroke: var(--vader-red);
+        }
+
+        .quick-btn:hover .letter-mark {
+            border-color: var(--vader-red);
+            color: var(--vader-red);
+        }
+
+        .modal-form label {
+            display: block;
+            font-family: 'Syncopate', sans-serif;
+            font-size: 0.62rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-gray);
+            margin: 1rem 0 0.5rem;
+        }
+
+        .modal-form label:first-of-type {
+            margin-top: 0;
+        }
+
+        .modal-form input,
+        .modal-form textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-dark);
+            border-radius: 8px;
+            padding: 0.8rem 0.9rem;
+            color: var(--text-white);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .modal-form textarea {
+            resize: vertical;
+            min-height: 96px;
+        }
+
+        .modal-form input::placeholder,
+        .modal-form textarea::placeholder {
+            color: var(--text-dim);
+        }
+
+        .modal-form input:focus,
+        .modal-form textarea:focus {
+            border-color: var(--vader-red);
+            box-shadow: 0 0 0 3px rgba(255, 49, 49, 0.12);
+        }
+
+        .modal-submit {
+            width: 100%;
+            justify-content: center;
+            margin-top: 1.4rem;
+            font-size: 0.75rem;
+        }
+
+        .modal-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .modal-status {
+            margin-top: 0.9rem;
+            font-size: 0.82rem;
+            text-align: center;
+            min-height: 1.2em;
+        }
+
+        .modal-status.success {
+            color: #3ddc84;
+        }
+
+        .modal-status.error {
+            color: var(--vader-red);
+        }
+
+        .modal-footnote {
+            margin-top: 1.4rem;
+            text-align: center;
+            font-size: 0.82rem;
+            color: var(--text-gray);
+        }
+
+        .modal-footnote a {
+            color: var(--text-white);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        .modal-footnote a:hover {
+            color: var(--vader-red);
+        }
+
+        @media (max-width: 480px) {
+            .modal-panel {
+                padding: 1.8rem 1.4rem 1.6rem;
+            }
+
+            .modal-quicklinks {
+                gap: 0.5rem;
+            }
+        }
+
         /* FOOTER */
         footer {
             border-top: 1px solid var(--border-dark);
@@ -948,7 +1201,7 @@
                 <li><a href="#system" data-section="system">System</a></li>
                 <li><a href="#contact" data-section="contact">Contact</a></li>
             </ul>
-            <a href="#contact" class="nav-cta">Work With Us ↗</a>
+            <button type="button" class="nav-cta js-open-contact-modal">Work With Us ↗</button>
         </nav>
     </div>
 
@@ -960,7 +1213,7 @@
                 <h1>DIGITAL INFRASTRUCTURE<br><span class="dim">FOR THE MODERN INTERNET.</span></h1>
                 <p>We build the systems behind digital products and brands that scale — from the product to the
                     infrastructure that powers their growth.</p>
-                <a href="#contact" class="cta-btn">WORK WITH US →</a>
+                <button type="button" class="cta-btn js-open-contact-modal">WORK WITH US →</button>
             </div>
             <div class="hero-visual">
                 <div class="visual-panel">
@@ -1193,31 +1446,7 @@
             <h2 class="section-title">Initiate Protocol</h2>
             <p class="section-subtitle center">Let's build your empire.</p>
 
-            <div class="contact-links">
-                <a href="#" class="social-btn" title="Telegram">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2">
-                        <path d="M22 2 11 13"></path>
-                        <path d="M22 2 15 22l-4-9-9-4 20-7Z"></path>
-                    </svg>
-                </a>
-                <a href="#" class="social-btn" title="Email">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2">
-                        <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-                        <path d="m2 7 10 6 10-6"></path>
-                    </svg>
-                </a>
-                <a href="#" class="social-btn" title="Book a Call">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2">
-                        <rect x="3" y="5" width="18" height="16" rx="2"></rect>
-                        <path d="M16 3v4M8 3v4M3 10h18"></path>
-                    </svg>
-                </a>
-            </div>
-
-            <a href="mailto:secure.communications@savaurxi.tech" class="cta-btn">WORK WITH US →</a>
+            <button type="button" class="cta-btn js-open-contact-modal">WORK WITH US →</button>
         </div>
     </section>
 
@@ -1232,6 +1461,70 @@
             <span>BUILT DIFFERENT. BUILT TO LAST.</span>
         </div>
     </footer>
+
+    <!-- CONTACT MODAL -->
+    <div class="modal-overlay" id="contact-modal" aria-hidden="true">
+        <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-title-text">
+            <button type="button" class="modal-close" id="modal-close-btn" aria-label="Close">✕</button>
+
+            <h3 class="modal-title" id="modal-title-text">Let's build something meaningful.</h3>
+            <p class="modal-subtitle">Got an idea, feedback, or want to collaborate? Send it over.</p>
+
+            <div class="modal-quicklinks">
+                <a class="quick-btn" href="https://t.me/Temo_cookie" target="_blank" rel="noopener" title="Telegram">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2">
+                        <path d="M22 2 11 13"></path>
+                        <path d="M22 2 15 22l-4-9-9-4 20-7Z"></path>
+                    </svg>
+                    Telegram
+                </a>
+                <a class="quick-btn" href="mailto:adarsh2006.9@gmail.com" title="Email">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2">
+                        <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                        <path d="m2 7 10 6 10-6"></path>
+                    </svg>
+                    Mail
+                </a>
+                <a class="quick-btn" href="https://wa.me/917736697402" target="_blank" rel="noopener" title="WhatsApp">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2">
+                        <path d="M21 11.5a8.5 8.5 0 0 1-11.86 7.82L3 21l1.68-6.14A8.5 8.5 0 1 1 21 11.5Z">
+                        </path>
+                    </svg>
+                    WhatsApp
+                </a>
+                <a class="quick-btn" href="https://www.fiverr.com/s/qDELPPd" target="_blank" rel="noopener"
+                    title="Fiverr">
+                    <span class="letter-mark">Fi</span>
+                    Fiverr
+                </a>
+            </div>
+
+            <form class="modal-form" id="contact-form">
+                <input type="hidden" name="access_key" value="fcbbea88-af0d-4d32-a17a-b106c7749ddb">
+                <input type="hidden" name="subject" value="New message from SAVAURXI site">
+                <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+
+                <label for="modal-name">Name</label>
+                <input type="text" id="modal-name" name="name" placeholder="Your name" required>
+
+                <label for="modal-email">Email</label>
+                <input type="email" id="modal-email" name="email" placeholder="you@example.com" required>
+
+                <label for="modal-message">Message</label>
+                <textarea id="modal-message" name="message" placeholder="What's on your mind?" required></textarea>
+
+                <button type="submit" class="cta-btn modal-submit" id="modal-submit-btn">SEND MESSAGE →</button>
+                <p class="modal-status" id="modal-status"></p>
+            </form>
+
+            <p class="modal-footnote">Prefer email? Reach me directly at
+                <a href="mailto:adarsh2006.9@gmail.com">adarsh2006.9@gmail.com</a>
+            </p>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
     <script>
@@ -1306,6 +1599,72 @@
                         target.scrollIntoView({ behavior: "smooth" });
                     }
                 });
+            });
+
+            // Contact modal
+            const modal = document.getElementById("contact-modal");
+            const openTriggers = document.querySelectorAll(".js-open-contact-modal");
+            const closeBtn = document.getElementById("modal-close-btn");
+            const form = document.getElementById("contact-form");
+            const submitBtn = document.getElementById("modal-submit-btn");
+            const statusEl = document.getElementById("modal-status");
+
+            function openModal() {
+                modal.classList.add("active");
+                modal.setAttribute("aria-hidden", "false");
+                document.body.style.overflow = "hidden";
+                if (lenis) lenis.stop();
+            }
+
+            function closeModal() {
+                modal.classList.remove("active");
+                modal.setAttribute("aria-hidden", "true");
+                document.body.style.overflow = "";
+                if (lenis) lenis.start();
+            }
+
+            openTriggers.forEach(btn => btn.addEventListener("click", openModal));
+            closeBtn.addEventListener("click", closeModal);
+
+            modal.addEventListener("click", (e) => {
+                if (e.target === modal) closeModal();
+            });
+
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape" && modal.classList.contains("active")) closeModal();
+            });
+
+            form.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                submitBtn.disabled = true;
+                submitBtn.textContent = "SENDING...";
+                statusEl.textContent = "";
+                statusEl.className = "modal-status";
+
+                try {
+                    const res = await fetch("https://api.web3forms.com/submit", {
+                        method: "POST",
+                        headers: { "Accept": "application/json" },
+                        body: new FormData(form)
+                    });
+                    const data = await res.json();
+
+                    if (data.success) {
+                        statusEl.textContent = "Message sent. We'll get back to you soon.";
+                        statusEl.className = "modal-status success";
+                        form.reset();
+                        setTimeout(closeModal, 1800);
+                    } else {
+                        statusEl.textContent = "Something went wrong. Please try again.";
+                        statusEl.className = "modal-status error";
+                    }
+                } catch (err) {
+                    statusEl.textContent = "Network error. Please try again.";
+                    statusEl.className = "modal-status error";
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "SEND MESSAGE →";
+                }
             });
         });
     </script>
