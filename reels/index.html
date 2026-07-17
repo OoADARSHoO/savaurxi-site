@@ -683,9 +683,9 @@
         .platforms .wrap {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
             flex-wrap: wrap;
-            gap: 24px;
+            gap: 24px 48px;
         }
 
         .platforms p {
@@ -963,9 +963,7 @@
             animation: marquee 42s linear infinite;
         }
 
-        .testi-track:hover {
-            animation-play-state: paused;
-        }
+        /* testi-track keeps scrolling on hover intentionally (no pause-on-hover) */
 
         @keyframes marquee {
             from {
@@ -978,66 +976,26 @@
         }
 
         .testi-card {
-            width: 320px;
+            height: 240px;
             flex-shrink: 0;
-            padding: 28px;
-            border-radius: 18px;
-            background: linear-gradient(160deg, rgba(139, 92, 246, 0.10), rgba(255, 255, 255, 0.03));
+            border-radius: 14px;
+            overflow: hidden;
             border: 1px solid var(--panel-border);
+            background: rgba(255, 255, 255, 0.025);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, border-color 0.3s ease;
         }
 
-        .testi-quote {
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.08);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 16px;
+        .testi-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
-        .testi-quote svg {
-            width: 13px;
-            height: 13px;
-            color: var(--gold-2);
-        }
-
-        .testi-card p {
-            font-size: 15px;
-            line-height: 1.55;
-            color: var(--ink);
-            margin-bottom: 20px;
-            min-height: 75px;
-        }
-
-        .testi-person {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .testi-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: var(--grad-vault);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 13px;
-            font-weight: 700;
-        }
-
-        .testi-name {
-            font-size: 14px;
-            font-weight: 700;
-        }
-
-        .testi-stars {
-            color: var(--gold);
-            font-size: 12px;
-            letter-spacing: 1px;
+        .testi-card img {
+            height: 100%;
+            width: auto;
+            display: block;
+            object-fit: contain;
         }
 
         /* ---------- faq ---------- */
@@ -1735,25 +1693,29 @@
         });
 
         // ---------- testimonials marquee (right to left, seamless loop) ----------
-        var testimonials = [
-            { name: "Cumali Belet", initials: "CB", text: "People don't realize yet what a crazy advantage they have with this vault... that's why I made the jump. It's promising.", stars: 5 },
-            { name: "Angelo dela Cruz", initials: "AD", text: "An abundance of valuable content and top notch support. Thank you!", stars: 5 },
-            { name: "Rasmus Nilsson", initials: "RN", text: "I really really like what Savaurxi have created! So helpful, and support all the way.", stars: 5 },
-            { name: "Dionne", initials: "D", text: "You cannot fail with all these resources sitting in one drive folder.", stars: 5 },
-            { name: "Marco Alvez", initials: "MA", text: "Downloaded the free vault on a Sunday, was posting my first reels by Monday. Wild how simple it is.", stars: 5 },
-            { name: "Priya Nair", initials: "PN", text: "Upgraded to Pro after two weeks with the free reels. The premium packs are a different tier of quality.", stars: 5 },
+        var reviewImages = [
+            "counterfeit-reviews/review1.webp",
+            "counterfeit-reviews/review2.webp",
+            "counterfeit-reviews/review3.webp",
+            "counterfeit-reviews/review4.webp",
+            "counterfeit-reviews/review5.webp",
+            "counterfeit-reviews/review6.webp",
+            "counterfeit-reviews/review7.webp",
+            "counterfeit-reviews/review8.webp",
+            "counterfeit-reviews/review9.webp",
+            "counterfeit-reviews/review10.webp",
+            "counterfeit-reviews/review11.webp",
+            "counterfeit-reviews/review12.webp",
+            "counterfeit-reviews/review13.webp",
+            "counterfeit-reviews/review14.webp",
+            "counterfeit-reviews/review15.webp",
+            "counterfeit-reviews/review16.webp"
         ];
         var track = document.getElementById('testiTrack');
-        function cardHTML(t) {
-            return '<div class="testi-card">'
-                + '<div class="testi-quote"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 7h4v6l-3 5H5l2-5H5V7zm8 0h4v6l-3 5h-3l2-5h-2V7z"/></svg></div>'
-                + '<p>' + t.text + '</p>'
-                + '<div class="testi-person">'
-                + '<div class="testi-avatar">' + t.initials + '</div>'
-                + '<div><div class="testi-name">' + t.name + '</div><div class="testi-stars">★★★★★</div></div>'
-                + '</div></div>';
+        function cardHTML(imgSrc) {
+            return '<div class="testi-card"><img src="' + imgSrc + '" alt="Creator Review" loading="lazy"></div>';
         }
-        var html = testimonials.map(cardHTML).join('');
+        var html = reviewImages.map(cardHTML).join('');
         track.innerHTML = html + html; // duplicate for seamless marquee
     </script>
 
