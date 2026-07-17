@@ -40,6 +40,28 @@
             scroll-behavior: smooth;
         }
 
+        /* LENIS SMOOTH SCROLL */
+        html.lenis,
+        html.lenis body {
+            height: auto;
+        }
+
+        .lenis.lenis-smooth {
+            scroll-behavior: auto !important;
+        }
+
+        .lenis.lenis-smooth [data-lenis-prevent] {
+            overscroll-behavior: contain;
+        }
+
+        .lenis.lenis-stopped {
+            overflow: hidden;
+        }
+
+        .lenis.lenis-smooth iframe {
+            pointer-events: none;
+        }
+
         body {
             background: var(--bg);
             color: var(--ink);
@@ -1634,17 +1656,51 @@
         </div>
     </footer>
 
-    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
     <script>
         // ---------- Lenis smooth scroll (with reduced-motion fallback) ----------
-        (function () {
-            var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            if (!prefersReduced && window.Lenis) {
-                var lenis = new Lenis({ duration: 1.1, smoothWheel: true });
-                function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        let lenis = null;
+
+        if (!prefersReducedMotion && typeof Lenis !== "undefined") {
+            lenis = new Lenis({
+                lerp: 0.1,
+                duration: 1.2,
+                smoothWheel: true,
+                wheelMultiplier: 1,
+                touchMultiplier: 2,
+            });
+
+            function raf(time) {
+                lenis.raf(time);
                 requestAnimationFrame(raf);
             }
-        })();
+            requestAnimationFrame(raf);
+        }
+
+        // Route anchor-link clicks through Lenis (falls back to native scroll if unavailable)
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+            link.addEventListener("click", (e) => {
+                const href = link.getAttribute("href");
+                if (!href || href === "#") {
+                    e.preventDefault();
+                    if (lenis) {
+                        lenis.scrollTo(0, { offset: 0 });
+                    } else {
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                    }
+                    return;
+                }
+                const target = document.querySelector(href);
+                if (!target) return;
+                e.preventDefault();
+                if (lenis) {
+                    lenis.scrollTo(target, { offset: -90 });
+                } else {
+                    target.scrollIntoView({ behavior: "smooth" });
+                }
+            });
+        });
 
         // ---------- CONFIG: replace these with your real links ----------
         var FREE_DRIVE_LINK = "https://drive.google.com/drive/folders/YOUR-FREE-VAULT-ID";
