@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reel Vault — 100,000+ Ready-to-Post Reels</title>
+    <meta name="description"
+        content="Copyright-free, ready-to-post reels across 32+ niches. No camera, no editing, no experience needed. Grab the free vault or unlock lifetime Pro access.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #06070c;
+            --bg-2: #0b0d16;
+            --panel: rgba(255, 255, 255, 0.045);
+            --panel-border: rgba(255, 255, 255, 0.09);
+            --ink: #eef0f8;
+            --ink-dim: #9297ad;
+            --ink-dimmer: #656a80;
+            --blue: #4f7dff;
+            --violet: #8b5cf6;
+            --gold: #f4b93e;
+            --gold-2: #ffd77a;
+            --green: #35d68f;
+            --grad-vault: linear-gradient(135deg, #4f7dff 0%, #8b5cf6 55%, #c04fff 100%);
+            --grad-gold: linear-gradient(135deg, #ffe19c 0%, #f4b93e 45%, #d98a1a 100%);
+            --radius: 18px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--ink);
+            font-family: 'Space Grotesk', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        ::selection {
+            background: var(--violet);
+            color: #fff;
+        }
+
+        h1,
+        h2,
+        h3,
+        .display {
+            font-family: 'Anton', sans-serif;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1.02;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .wrap {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ---------- ambient background ---------- */
+        .ambient {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(circle 900px at 12% -8%, rgba(79, 125, 255, 0.20), transparent 60%),
+                radial-gradient(circle 800px at 92% 8%, rgba(139, 92, 246, 0.16), transparent 55%),
+                radial-gradient(circle 700px at 50% 100%, rgba(244, 185, 62, 0.08), transparent 60%),
+                var(--bg);
+        }
+
+        .ambient::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 64px 64px;
+            mask-image: radial-gradient(circle 900px at 50% 0%, black, transparent 75%);
+        }
+
+        .noise {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.035;
+            mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        main,
+        header,
+        footer {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ---------- nav ---------- */
+        .nav-wrap {
+            position: fixed;
+            top: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            width: min(920px, calc(100% - 32px));
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 10px 10px 18px;
+            background: rgba(10, 11, 20, 0.65);
+            border: 1px solid var(--panel-border);
+            border-radius: 999px;
+            backdrop-filter: blur(20px) saturate(160%);
+            -webkit-backdrop-filter: blur(20px) saturate(160%);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            font-size: 15px;
+        }
+
+        .brand-mark {
+            width: 30px;
+            height: 30px;
+            border-radius: 9px;
+            background: var(--grad-vault);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 18px rgba(139, 92, 246, 0.55);
+        }
+
+        .brand-mark svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            font-size: 14px;
+            color: var(--ink-dim);
+        }
+
+        .nav-links a {
+            transition: color .2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--ink);
+        }
+
+        .nav-cta {
+            font-size: 13.5px;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 999px;
+            background: var(--grad-vault);
+            color: #fff;
+            white-space: nowrap;
+            box-shadow: 0 6px 20px rgba(79, 125, 255, 0.35);
+            transition: transform .2s, box-shadow .2s;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 26px rgba(139, 92, 246, 0.5);
+        }
+
+        .nav-burger {
+            display: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            border: 1px solid var(--panel-border);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--ink);
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ---------- buttons ---------- */
+        .btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 30px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            border: none;
+            overflow: hidden;
+            isolation: isolate;
+            transition: transform .25s ease, box-shadow .25s ease;
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        .btn-primary {
+            background: var(--grad-vault);
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(79, 125, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 36px rgba(139, 92, 246, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-gold {
+            background: var(--grad-gold);
+            color: #241705;
+            box-shadow: 0 10px 30px rgba(244, 185, 62, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 36px rgba(244, 185, 62, 0.45);
+        }
+
+        .btn-glass {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--panel-border);
+            color: var(--ink);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-block {
+            width: 100%;
+        }
+
+        .btn-sheen {
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+        }
+
+        .btn .sheen {
+            position: absolute;
+            top: 0;
+            left: -60%;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+            transform: skewX(-20deg);
+            transition: left .6s ease;
+        }
+
+        .btn:hover .sheen {
+            left: 130%;
+        }
+
+        .hover-fill {
+            position: relative;
+            width: auto;
+            padding: 15px 30px;
+            border-radius: 999px;
+            border: 1px solid var(--panel-border);
+            background: transparent;
+            color: var(--ink);
+            font-weight: 600;
+            font-size: 14.5px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .hover-fill span.label {
+            position: relative;
+            z-index: 2;
+            transition: color .35s ease;
+        }
+
+        .hover-fill .fill {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            width: 10px;
+            height: 10px;
+            border-radius: 999px;
+            background: var(--grad-vault);
+            transform: translateY(-50%) scale(1);
+            transition: all .45s cubic-bezier(.7, 0, .3, 1);
+            z-index: 1;
+        }
+
+        .hover-fill:hover .fill {
+            width: 220%;
+            height: 800%;
+            left: -60%;
+        }
+
+        .hover-fill:hover span.label {
+            color: #fff;
+        }
+
+        /* ---------- section basics ---------- */
+        section {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12.5px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--blue);
+            margin-bottom: 18px;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--blue);
+            box-shadow: 0 0 10px var(--blue);
+        }
+
+        .section-title {
+            font-size: clamp(32px, 5vw, 54px);
+            margin-bottom: 18px;
+        }
+
+        .section-sub {
+            color: var(--ink-dim);
+            font-size: 17px;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .center {
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ---------- hero ---------- */
+        .hero {
+            padding: 190px 0 90px;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px 8px 8px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--panel-border);
+            font-size: 13px;
+            margin-bottom: 26px;
+        }
+
+        .hero-badge .dot {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--grad-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+        }
+
+        .hero h1 {
+            font-size: clamp(38px, 5.4vw, 68px);
+            margin-bottom: 22px;
+        }
+
+        .hero h1 .grad {
+            background: var(--grad-vault);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p.lead {
+            font-size: 18px;
+            color: var(--ink-dim);
+            max-width: 520px;
+            line-height: 1.7;
+            margin-bottom: 34px;
+        }
+
+        .hero-ctas {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-bottom: 36px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 34px;
+            flex-wrap: wrap;
+        }
+
+        .hero-stats .stat b {
+            font-family: 'Anton', sans-serif;
+            font-size: 26px;
+            display: block;
+            background: var(--grad-vault);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-stats .stat span {
+            font-size: 12.5px;
+            color: var(--ink-dimmer);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* phone fan visual */
+        .fan {
+            position: relative;
+            height: 460px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .phone {
+            position: absolute;
+            width: 150px;
+            height: 290px;
+            border-radius: 22px;
+            background: linear-gradient(160deg, #14172a, #0a0b14);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55);
+            overflow: hidden;
+        }
+
+        .phone::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            opacity: .9;
+        }
+
+        .phone .thumb {
+            position: absolute;
+            inset: 6px;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .phone .play {
+            position: absolute;
+            bottom: 14px;
+            right: 14px;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .phone .play svg {
+            width: 10px;
+            height: 10px;
+            fill: #fff;
+            margin-left: 1px;
+        }
+
+        .phone.p1 {
+            transform: rotate(-13deg) translate(-150px, 10px);
+            background-image: linear-gradient(155deg, #2d3a63, #171c31);
+        }
+
+        .phone.p2 {
+            transform: rotate(-5deg) translate(-70px, -18px);
+            background-image: linear-gradient(155deg, #3a2d63, #1c1731);
+            z-index: 2;
+        }
+
+        .phone.p3 {
+            transform: translateY(-34px) scale(1.06);
+            z-index: 4;
+            box-shadow: 0 40px 80px rgba(79, 125, 255, 0.35);
+        }
+
+        .phone.p4 {
+            transform: rotate(5deg) translate(70px, -18px);
+            background-image: linear-gradient(155deg, #63432d, #311f17);
+            z-index: 2;
+        }
+
+        .phone.p5 {
+            transform: rotate(13deg) translate(150px, 10px);
+            background-image: linear-gradient(155deg, #2d6350, #172c17);
+        }
+
+        .phone .thumb.grad1 {
+            background: linear-gradient(160deg, #4f7dff, #0d1330);
+        }
+
+        .phone .thumb.grad2 {
+            background: linear-gradient(160deg, #8b5cf6, #1a0d33);
+        }
+
+        .phone .thumb.grad3 {
+            background: linear-gradient(160deg, #f4b93e, #3a2405);
+        }
+
+        .phone .thumb.grad4 {
+            background: linear-gradient(160deg, #35d68f, #062017);
+        }
+
+        .phone .thumb.grad5 {
+            background: linear-gradient(160deg, #ff6b81, #2c0812);
+        }
+
+        .phone .bars {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 10px;
+            display: flex;
+            gap: 5px;
+            align-items: flex-end;
+        }
+
+        .phone .bars i {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.35);
+            border-radius: 2px;
+        }
+
+        .fan-glow {
+            position: absolute;
+            width: 340px;
+            height: 340px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.35), transparent 70%);
+            filter: blur(10px);
+            z-index: 0;
+        }
+
+        .lock-badge {
+            position: absolute;
+            bottom: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 11, 20, 0.75);
+            border: 1px solid var(--panel-border);
+            backdrop-filter: blur(12px);
+            padding: 10px 18px;
+            border-radius: 999px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12.5px;
+            font-weight: 600;
+            z-index: 5;
+        }
+
+        .lock-badge svg {
+            width: 14px;
+            height: 14px;
+            color: var(--green);
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-10px)
+            }
+        }
+
+        .phone.p3 {
+            animation: floatMain 5s ease-in-out infinite;
+        }
+
+        @keyframes floatMain {
+
+            0%,
+            100% {
+                transform: translateY(-34px) scale(1.06)
+            }
+
+            50% {
+                transform: translateY(-46px) scale(1.06)
+            }
+        }
+
+        /* ---------- logos strip ---------- */
+        .platforms {
+            padding: 40px 0;
+            border-top: 1px solid var(--panel-border);
+            border-bottom: 1px solid var(--panel-border);
+        }
+
+        .platforms .wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .platforms p {
+            font-size: 12.5px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--ink-dimmer);
+            white-space: nowrap;
+        }
+
+        .platform-icons {
+            display: flex;
+            gap: 34px;
+            flex-wrap: wrap;
+            align-items: center;
+            color: var(--ink-dim);
+        }
+
+        .platform-icons span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14.5px;
+            font-weight: 600;
+        }
+
+        .platform-icons svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ---------- how it works ---------- */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 26px;
+            margin-top: 60px;
+        }
+
+        .step {
+            background: var(--panel);
+            border: 1px solid var(--panel-border);
+            border-radius: var(--radius);
+            padding: 34px 28px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step .num {
+            font-family: 'Anton', sans-serif;
+            font-size: 52px;
+            color: transparent;
+            -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.18);
+            position: absolute;
+            top: 14px;
+            right: 20px;
+        }
+
+        .step h3 {
+            font-size: 20px;
+            margin: 18px 0 10px;
+            text-transform: none;
+            font-family: 'Space Grotesk';
+            font-weight: 700;
+        }
+
+        .step p {
+            color: var(--ink-dim);
+            font-size: 14.5px;
+            line-height: 1.6;
+        }
+
+        .step-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            background: var(--grad-vault);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 22px rgba(79, 125, 255, 0.35);
+        }
+
+        .step-icon svg {
+            width: 22px;
+            height: 22px;
+            color: #fff;
+        }
+
+        /* ---------- pricing ---------- */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.08fr;
+            gap: 28px;
+            margin-top: 60px;
+            align-items: stretch;
+        }
+
+        .plan {
+            border-radius: 22px;
+            padding: 40px 34px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--panel-border);
+        }
+
+        .plan-free {
+            background: var(--panel);
+            backdrop-filter: blur(10px);
+        }
+
+        .plan-pro {
+            background: linear-gradient(160deg, rgba(244, 185, 62, 0.14), rgba(139, 92, 246, 0.10));
+            border: 1px solid rgba(244, 185, 62, 0.4);
+            box-shadow: 0 30px 70px rgba(244, 185, 62, 0.14);
+        }
+
+        .plan-badge {
+            position: absolute;
+            top: -14px;
+            left: 34px;
+            background: var(--grad-gold);
+            color: #241705;
+            font-size: 11.5px;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            padding: 7px 16px;
+            border-radius: 999px;
+            box-shadow: 0 8px 18px rgba(244, 185, 62, 0.4);
+        }
+
+        .plan-name {
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--ink-dim);
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .plan-pro .plan-name {
+            color: var(--gold-2);
+        }
+
+        .plan-price {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .plan-price b {
+            font-family: 'Anton', sans-serif;
+            font-size: 52px;
+        }
+
+        .plan-price span {
+            color: var(--ink-dimmer);
+            font-size: 14px;
+        }
+
+        .plan-price .strike {
+            text-decoration: line-through;
+            color: var(--ink-dimmer);
+            font-size: 18px;
+            font-weight: 400;
+            font-family: 'Space Grotesk';
+        }
+
+        .plan-desc {
+            color: var(--ink-dim);
+            font-size: 14.5px;
+            margin-bottom: 26px;
+            line-height: 1.6;
+        }
+
+        .plan-features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+            margin-bottom: 32px;
+            flex: 1;
+        }
+
+        .plan-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14.5px;
+            color: var(--ink);
+        }
+
+        .plan-features li svg {
+            width: 17px;
+            height: 17px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .plan-free .plan-features li svg {
+            color: var(--blue);
+        }
+
+        .plan-pro .plan-features li svg {
+            color: var(--gold);
+        }
+
+        .plan-features li.dim {
+            color: var(--ink-dimmer);
+        }
+
+        .plan-features li b {
+            color: var(--gold-2);
+            font-weight: 700;
+        }
+
+        .plan-note {
+            font-size: 12px;
+            color: var(--ink-dimmer);
+            margin-top: 12px;
+            text-align: center;
+        }
+
+        /* ---------- vault preview grid ---------- */
+        .niche-marquee {
+            overflow: hidden;
+            margin-top: 56px;
+            -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+            mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+        }
+
+        .niche-track {
+            display: flex;
+            gap: 14px;
+            width: max-content;
+            animation: scrollX 32s linear infinite;
+        }
+
+        .niche-chip {
+            padding: 12px 22px;
+            border-radius: 999px;
+            border: 1px solid var(--panel-border);
+            background: var(--panel);
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            color: var(--ink-dim);
+        }
+
+        @keyframes scrollX {
+            from {
+                transform: translateX(0)
+            }
+
+            to {
+                transform: translateX(-50%)
+            }
+        }
+
+        /* ---------- testimonials ---------- */
+        .testi-wrap {
+            overflow: hidden;
+            margin-top: 56px;
+            -webkit-mask-image: linear-gradient(90deg, transparent, black 6%, black 94%, transparent);
+            mask-image: linear-gradient(90deg, transparent, black 6%, black 94%, transparent);
+        }
+
+        .testi-track {
+            display: flex;
+            gap: 22px;
+            width: max-content;
+            animation: marquee 42s linear infinite;
+        }
+
+        .testi-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee {
+            from {
+                transform: translateX(0)
+            }
+
+            to {
+                transform: translateX(-50%)
+            }
+        }
+
+        .testi-card {
+            width: 320px;
+            flex-shrink: 0;
+            padding: 28px;
+            border-radius: 18px;
+            background: linear-gradient(160deg, rgba(139, 92, 246, 0.10), rgba(255, 255, 255, 0.03));
+            border: 1px solid var(--panel-border);
+        }
+
+        .testi-quote {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .testi-quote svg {
+            width: 13px;
+            height: 13px;
+            color: var(--gold-2);
+        }
+
+        .testi-card p {
+            font-size: 15px;
+            line-height: 1.55;
+            color: var(--ink);
+            margin-bottom: 20px;
+            min-height: 75px;
+        }
+
+        .testi-person {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .testi-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--grad-vault);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .testi-name {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .testi-stars {
+            color: var(--gold);
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        /* ---------- faq ---------- */
+        .faq-list {
+            max-width: 760px;
+            margin: 56px auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .faq-item {
+            border: 1px solid var(--panel-border);
+            border-radius: 14px;
+            background: var(--panel);
+            overflow: hidden;
+        }
+
+        .faq-q {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15.5px;
+        }
+
+        .faq-q .plus {
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+            position: relative;
+            margin-left: 16px;
+        }
+
+        .faq-q .plus::before,
+        .faq-q .plus::after {
+            content: "";
+            position: absolute;
+            background: var(--ink-dim);
+            transition: transform .3s;
+        }
+
+        .faq-q .plus::before {
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1.5px;
+            transform: translateY(-50%);
+        }
+
+        .faq-q .plus::after {
+            left: 50%;
+            top: 0;
+            height: 100%;
+            width: 1.5px;
+            transform: translateX(-50%);
+        }
+
+        .faq-item.open .plus::after {
+            transform: translateX(-50%) rotate(90deg);
+            opacity: 0;
+        }
+
+        .faq-a {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .35s ease;
+        }
+
+        .faq-a p {
+            padding: 0 24px 22px;
+            color: var(--ink-dim);
+            font-size: 14.5px;
+            line-height: 1.65;
+        }
+
+        /* ---------- final cta ---------- */
+        .final-cta {
+            border-radius: 28px;
+            padding: 70px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(160deg, rgba(79, 125, 255, 0.16), rgba(139, 92, 246, 0.10));
+            border: 1px solid var(--panel-border);
+        }
+
+        .final-cta::before {
+            content: "";
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(244, 185, 62, 0.18), transparent 70%);
+            top: -200px;
+            right: -150px;
+        }
+
+        .final-cta h2 {
+            font-size: clamp(28px, 4.5vw, 44px);
+            margin-bottom: 16px;
+        }
+
+        .final-cta p {
+            color: var(--ink-dim);
+            max-width: 520px;
+            margin: 0 auto 34px;
+            font-size: 16px;
+        }
+
+        .final-ctas {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ---------- footer ---------- */
+        footer {
+            padding: 60px 0 30px;
+            border-top: 1px solid var(--panel-border);
+            margin-top: 60px;
+        }
+
+        .foot-top {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .foot-brand p {
+            color: var(--ink-dimmer);
+            font-size: 14px;
+            max-width: 280px;
+            margin-top: 14px;
+            line-height: 1.6;
+        }
+
+        .foot-cols {
+            display: flex;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+
+        .foot-col h4 {
+            font-size: 12.5px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--ink-dimmer);
+            margin-bottom: 16px;
+        }
+
+        .foot-col a {
+            display: block;
+            color: var(--ink-dim);
+            font-size: 14.5px;
+            margin-bottom: 11px;
+            transition: color .2s;
+        }
+
+        .foot-col a:hover {
+            color: var(--ink);
+        }
+
+        .foot-bottom {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 14px;
+            padding-top: 26px;
+            border-top: 1px solid var(--panel-border);
+            color: var(--ink-dimmer);
+            font-size: 13px;
+        }
+
+        /* ---------- reveal on scroll ---------- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity .7s ease, transform .7s ease;
+        }
+
+        .reveal.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ---------- responsive ---------- */
+        @media (max-width: 920px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .fan {
+                order: -1;
+                height: 340px;
+                margin-bottom: 10px;
+            }
+
+            .phone {
+                width: 120px;
+                height: 230px;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .nav-burger {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 560px) {
+            section {
+                padding: 80px 0;
+            }
+
+            .hero {
+                padding: 150px 0 60px;
+            }
+
+            .hero-stats {
+                gap: 22px;
+            }
+
+            .foot-top {
+                flex-direction: column;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            html {
+                scroll-behavior: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="ambient"></div>
+    <div class="noise"></div>
+
+    <div class="nav-wrap">
+        <nav class="nav">
+            <a href="#top" class="brand">
+                <span class="brand-mark">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M5 3l14 9-14 9V3z" fill="#fff" />
+                    </svg>
+                </span>
+                Reel Vault
+            </a>
+            <div class="nav-links">
+                <a href="#how">How it works</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#reviews">Reviews</a>
+                <a href="#faq">FAQ</a>
+            </div>
+            <a href="#pricing" class="nav-cta">Get Access</a>
+        </nav>
+    </div>
+
+    <main id="top">
+
+        <!-- HERO -->
+        <section class="hero">
+            <div class="wrap hero-grid">
+                <div>
+                    <div class="hero-badge reveal">
+                        <span class="dot">🔓</span>
+                        Vault unlocked for creators — no camera required
+                    </div>
+                    <h1>100,000+ reels.<br><span class="grad">Zero cameras.</span><br>Infinite content.</h1>
+                    <p class="lead">A ready-to-post reel bundle for Instagram, TikTok, Facebook and YouTube.
+                        Copyright-free, organized by niche, and built for creators who want to break the monetization
+                        gap without ever picking up a camera.</p>
+                    <div class="hero-ctas">
+                        <a href="#pricing" class="btn btn-primary">
+                            <span class="sheen"></span>
+                            Unlock Vault Pro — $9.95
+                        </a>
+                        <a href="#free" class="btn btn-glass">Get the free vault</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat"><b>100K+</b><span>Ready reels</span></div>
+                        <div class="stat"><b>32+</b><span>Content niches</span></div>
+                        <div class="stat"><b>Lifetime</b><span>Access, no renewals</span></div>
+                    </div>
+                </div>
+
+                <div class="fan reveal">
+                    <div class="fan-glow"></div>
+                    <div class="phone p1">
+                        <div class="thumb grad1"></div>
+                        <div class="play"><svg viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                            </svg></div>
+                    </div>
+                    <div class="phone p2">
+                        <div class="thumb grad2"></div>
+                        <div class="play"><svg viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                            </svg></div>
+                    </div>
+                    <div class="phone p3">
+                        <div class="thumb grad3"></div>
+                        <div class="play"><svg viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                            </svg></div>
+                    </div>
+                    <div class="phone p4">
+                        <div class="thumb grad4"></div>
+                        <div class="play"><svg viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                            </svg></div>
+                    </div>
+                    <div class="phone p5">
+                        <div class="thumb grad5"></div>
+                        <div class="play"><svg viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                            </svg></div>
+                    </div>
+                    <div class="lock-badge">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 6L9 17l-5-5" />
+                        </svg>
+                        100% copyright-free
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PLATFORMS -->
+        <section class="platforms" style="padding-top:0; padding-bottom:40px;">
+            <div class="wrap">
+                <p>Post anywhere you already have an audience</p>
+                <div class="platform-icons">
+                    <span>Instagram Reels</span>
+                    <span>TikTok</span>
+                    <span>YouTube Shorts</span>
+                    <span>Facebook Reels</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- HOW IT WORKS -->
+        <section id="how">
+            <div class="wrap">
+                <div class="eyebrow">The process</div>
+                <h2 class="section-title">From download to <br>monetized in three steps</h2>
+                <p class="section-sub">There's no editing suite, no filming, no waiting around. The vault is built so
+                    you can go from "I want to start" to "I just posted" in one sitting.</p>
+
+                <div class="steps">
+                    <div class="step reveal">
+                        <div class="num">01</div>
+                        <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                            </svg></div>
+                        <h3>Get your vault link</h3>
+                        <p>Grab the free 100K reel drive, or unlock Vault Pro for the full premium library. Access lands
+                            instantly — no waiting on approval.</p>
+                    </div>
+                    <div class="step reveal">
+                        <div class="num">02</div>
+                        <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+                                <path d="M4 4h16v16H4zM4 9h16M9 4v16" />
+                            </svg></div>
+                        <h3>Pick your niche</h3>
+                        <p>Reels are pre-sorted across 32+ niches — fitness, food, motivation, travel, luxury, and more.
+                            Download what fits your page.</p>
+                    </div>
+                    <div class="step reveal">
+                        <div class="num">03</div>
+                        <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+                                <path d="M13 2L3 14h7v8l10-12h-7V2z" />
+                            </svg></div>
+                        <h3>Post & break the gap</h3>
+                        <p>Upload directly to Instagram, TikTok, YouTube or Facebook. Once you clear the platform's
+                            monetization threshold, you start earning.</p>
+                    </div>
+                </div>
+
+                <div class="niche-marquee">
+                    <div class="niche-track" id="nicheTrack">
+                        <span class="niche-chip">🏋️ Fitness</span>
+                        <span class="niche-chip">🍜 Food</span>
+                        <span class="niche-chip">✈️ Travel</span>
+                        <span class="niche-chip">💰 Finance</span>
+                        <span class="niche-chip">🚗 Luxury</span>
+                        <span class="niche-chip">🧘 Mindset</span>
+                        <span class="niche-chip">🐾 Animals</span>
+                        <span class="niche-chip">🌆 Aesthetic</span>
+                        <span class="niche-chip">💬 Quotes</span>
+                        <span class="niche-chip">🏀 Sports</span>
+                        <span class="niche-chip">🎬 Cinematic</span>
+                        <span class="niche-chip">🌊 Nature</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRICING -->
+        <section id="pricing">
+            <div class="wrap">
+                <div class="eyebrow center">Choose your access</div>
+                <h2 class="section-title center">Two vaults. One decision.</h2>
+                <p class="section-sub center">Start free, forever — or unlock the full Pro vault and every future drop
+                    for a one-time $9.95.</p>
+
+                <div class="pricing-grid">
+                    <!-- FREE -->
+                    <div class="plan plan-free reveal" id="free">
+                        <div class="plan-name">Starter Vault — Free</div>
+                        <div class="plan-price"><b>$0</b><span>/ forever</span></div>
+                        <p class="plan-desc">The exact same 100,000+ reel library, unlocked at no cost. A real starting
+                            point, not a trial.</p>
+                        <ul class="plan-features">
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 6L9 17l-5-5" />
+                                </svg> 100,000+ ready-to-post reels</li>
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 6L9 17l-5-5" />
+                                </svg> 32+ organized content niches</li>
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 6L9 17l-5-5" />
+                                </svg> 100% copyright-free, post anywhere</li>
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 6L9 17l-5-5" />
+                                </svg> Lifetime access to this drive</li>
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 6L9 17l-5-5" />
+                                </svg> No experience or editing needed</li>
+                            <li class="dim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M18 6L6 18M6 6l12 12" />
+                                </svg> No future content drops</li>
+                            <li class="dim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M18 6L6 18M6 6l12 12" />
+                                </svg> No exclusive premium packs</li>
+                        </ul>
+                        <a href="#" id="freeLink" class="btn btn-glass btn-block">Get the free vault</a>
+                        <p class="plan-note">Instant Google Drive access after signup</p>
+                    </div>
+
+                    <!-- PRO -->
+                    <div class="plan plan-pro reveal">
+                        <span class="plan-badge">Best Value · Most Popular</span>
+                        <div class="plan-name">Vault Pro — Lifetime</div>
+                        <div class="plan-price"><span class="strike">$49</span><b>$9.95</b><span>/ one-time</span></div>
+                        <p class="plan-desc">Everything in Starter, plus the premium library and every reel we add from
+                            here on — for one payment, forever.</p>
+                        <ul class="plan-features">
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 6L9 17l-5-5" />
+                                </svg> <b>Everything in the free vault</b></li>
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 6L9 17l-5-5" />
+                                </svg> Exclusive premium reel packs, higher quality</li>
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 6L9 17l-5-5" />
+                                </svg> Free lifetime access to all future content drops</li>
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 6L9 17l-5-5" />
+                                </svg> Early access to trending reel packs</li>
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 6L9 17l-5-5" />
+                                </svg> Priority support from the Savaurxi team</li>
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 6L9 17l-5-5" />
+                                </svg> Private creator community access</li>
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 6L9 17l-5-5" />
+                                </svg> One payment — no subscriptions, ever</li>
+                        </ul>
+                        <a href="#" id="proLink" class="btn btn-gold btn-block">
+                            <span class="sheen"></span>
+                            Unlock Vault Pro — $9.95
+                        </a>
+                        <p class="plan-note">Secure checkout via Whop · Instant delivery</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIALS -->
+        <section id="reviews">
+            <div class="wrap">
+                <div class="eyebrow center">Social proof</div>
+                <h2 class="section-title center">Creators are already<br><span style="color:var(--gold-2)">breaking
+                        free</span></h2>
+            </div>
+            <div class="testi-wrap">
+                <div class="testi-track" id="testiTrack">
+                    <!-- cards injected by JS (duplicated for seamless loop) -->
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq">
+            <div class="wrap">
+                <div class="eyebrow center">Questions</div>
+                <h2 class="section-title center">Before you unlock the vault</h2>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <div class="faq-q">Is this actually copyright-free? <span class="plus"></span></div>
+                        <div class="faq-a">
+                            <p>Yes. Every reel in the vault is cleared for reuse, so you can upload it to any platform
+                                under your own account without copyright strikes or claims.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q">What's the real difference between free and Pro? <span class="plus"></span>
+                        </div>
+                        <div class="faq-a">
+                            <p>The free vault gives you the full 100,000+ reel library, forever. Vault Pro adds the
+                                exclusive premium packs, every future content drop for life, early access to trending
+                                reels, and priority support — all for a single $9.95 payment.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q">Do I need editing skills or equipment? <span class="plus"></span></div>
+                        <div class="faq-a">
+                            <p>No camera, no editing software, and no experience required. Download a reel, upload it to
+                                your platform of choice, and you're posted.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q">How do I actually get access?</div>
+                        <div class="faq-a">
+                            <p>Free vault access delivers an instant Google Drive link. Vault Pro checks out securely
+                                through Whop and unlocks your Drive link immediately after payment.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q">Is Vault Pro really a one-time payment? <span class="plus"></span></div>
+                        <div class="faq-a">
+                            <p>Yes — $9.95 once. No subscription, no recurring billing, and it includes every reel pack
+                                we add to the vault from that point forward.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FINAL CTA -->
+        <section>
+            <div class="wrap">
+                <div class="final-cta reveal">
+                    <h2>Stop scrolling. Start posting.</h2>
+                    <p>Grab the free vault right now, or unlock lifetime Pro access — including every future drop — for
+                        one $9.95 payment.</p>
+                    <div class="final-ctas">
+                        <a href="#pricing" class="btn btn-gold">Unlock Vault Pro — $9.95</a>
+                        <a href="#free" class="btn btn-glass">Get the free vault instead</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="wrap">
+            <div class="foot-top">
+                <div class="foot-brand">
+                    <div class="brand">
+                        <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none">
+                                <path d="M5 3l14 9-14 9V3z" fill="#fff" />
+                            </svg></span>
+                        Reel Vault
+                    </div>
+                    <p>100,000+ ready-to-post, copyright-free reels for creators who'd rather post than film. A Savaurxi
+                        product.</p>
+                </div>
+                <div class="foot-cols">
+                    <div class="foot-col">
+                        <h4>Product</h4>
+                        <a href="#how">How it works</a>
+                        <a href="#pricing">Pricing</a>
+                        <a href="#reviews">Reviews</a>
+                        <a href="#faq">FAQ</a>
+                    </div>
+                    <div class="foot-col">
+                        <h4>Access</h4>
+                        <a href="#free">Free vault</a>
+                        <a href="#pricing">Vault Pro</a>
+                        <a href="https://savaurxi.tech" target="_blank" rel="noopener">Savaurxi.tech</a>
+                    </div>
+                </div>
+            </div>
+            <div class="foot-bottom">
+                <span>© 2026 Savaurxi. All rights reserved.</span>
+                <span>Reels are licensed for reuse — check platform guidelines before posting.</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+    <script>
+        // ---------- Lenis smooth scroll (with reduced-motion fallback) ----------
+        (function () {
+            var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!prefersReduced && window.Lenis) {
+                var lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+                function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+                requestAnimationFrame(raf);
+            }
+        })();
+
+        // ---------- CONFIG: replace these with your real links ----------
+        var FREE_DRIVE_LINK = "https://drive.google.com/drive/folders/YOUR-FREE-VAULT-ID";
+        var WHOP_CHECKOUT_LINK = "https://whop.com/checkout/YOUR-PRODUCT-ID";
+        document.getElementById('freeLink').href = FREE_DRIVE_LINK;
+        document.getElementById('proLink').href = WHOP_CHECKOUT_LINK;
+
+        // ---------- reveal on scroll ----------
+        var revealEls = document.querySelectorAll('.reveal');
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+            });
+        }, { threshold: 0.15 });
+        revealEls.forEach(function (el) { io.observe(el); });
+
+        // ---------- FAQ accordion ----------
+        document.querySelectorAll('.faq-item').forEach(function (item) {
+            var q = item.querySelector('.faq-q');
+            var a = item.querySelector('.faq-a');
+            q.addEventListener('click', function () {
+                var isOpen = item.classList.contains('open');
+                document.querySelectorAll('.faq-item.open').forEach(function (o) {
+                    o.classList.remove('open');
+                    o.querySelector('.faq-a').style.maxHeight = null;
+                });
+                if (!isOpen) {
+                    item.classList.add('open');
+                    a.style.maxHeight = a.scrollHeight + 'px';
+                }
+            });
+        });
+
+        // ---------- testimonials marquee (right to left, seamless loop) ----------
+        var testimonials = [
+            { name: "Cumali Belet", initials: "CB", text: "People don't realize yet what a crazy advantage they have with this vault... that's why I made the jump. It's promising.", stars: 5 },
+            { name: "Angelo dela Cruz", initials: "AD", text: "An abundance of valuable content and top notch support. Thank you!", stars: 5 },
+            { name: "Rasmus Nilsson", initials: "RN", text: "I really really like what Savaurxi have created! So helpful, and support all the way.", stars: 5 },
+            { name: "Dionne", initials: "D", text: "You cannot fail with all these resources sitting in one drive folder.", stars: 5 },
+            { name: "Marco Alvez", initials: "MA", text: "Downloaded the free vault on a Sunday, was posting my first reels by Monday. Wild how simple it is.", stars: 5 },
+            { name: "Priya Nair", initials: "PN", text: "Upgraded to Pro after two weeks with the free reels. The premium packs are a different tier of quality.", stars: 5 },
+        ];
+        var track = document.getElementById('testiTrack');
+        function cardHTML(t) {
+            return '<div class="testi-card">'
+                + '<div class="testi-quote"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 7h4v6l-3 5H5l2-5H5V7zm8 0h4v6l-3 5h-3l2-5h-2V7z"/></svg></div>'
+                + '<p>' + t.text + '</p>'
+                + '<div class="testi-person">'
+                + '<div class="testi-avatar">' + t.initials + '</div>'
+                + '<div><div class="testi-name">' + t.name + '</div><div class="testi-stars">★★★★★</div></div>'
+                + '</div></div>';
+        }
+        var html = testimonials.map(cardHTML).join('');
+        track.innerHTML = html + html; // duplicate for seamless marquee
+    </script>
+
+</body>
+
+</html>
