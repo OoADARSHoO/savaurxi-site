@@ -226,14 +226,79 @@
 
         .nav-burger {
             display: none;
-            width: 34px;
-            height: 34px;
+            width: 38px;
+            height: 38px;
+            min-width: 38px;
             border-radius: 9px;
             border: 1px solid var(--panel-border);
             background: rgba(255, 255, 255, 0.04);
             color: var(--ink);
             align-items: center;
             justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            margin-left: 8px;
+        }
+
+        .nav-burger .bar {
+            transition: transform .25s ease, opacity .25s ease;
+            transform-origin: center;
+        }
+
+        .nav-burger[aria-expanded="true"] .bar-top {
+            transform: translateY(6px) rotate(45deg);
+        }
+
+        .nav-burger[aria-expanded="true"] .bar-mid {
+            opacity: 0;
+        }
+
+        .nav-burger[aria-expanded="true"] .bar-bot {
+            transform: translateY(-6px) rotate(-45deg);
+        }
+
+        /* ---------- mobile nav dropdown ---------- */
+        .nav-mobile {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            margin-top: 10px;
+            padding: 14px;
+            background: rgba(10, 11, 20, 0.85);
+            border: 1px solid var(--panel-border);
+            border-radius: 20px;
+            backdrop-filter: blur(20px) saturate(160%);
+            -webkit-backdrop-filter: blur(20px) saturate(160%);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height .3s ease, opacity .25s ease;
+        }
+
+        .nav-mobile.open {
+            display: flex;
+            max-height: 400px;
+            opacity: 1;
+        }
+
+        .nav-mobile a {
+            padding: 12px 10px;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--ink-dim);
+            border-radius: 10px;
+            transition: background .2s, color .2s;
+        }
+
+        .nav-mobile a:not(.btn):hover {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--ink);
+        }
+
+        .nav-mobile .btn {
+            margin-top: 8px;
+            padding: 13px 20px;
         }
 
         /* ---------- buttons ---------- */
@@ -1222,20 +1287,165 @@
         }
 
         @media (max-width: 560px) {
+            .wrap {
+                padding: 0 18px;
+            }
+
             section {
-                padding: 80px 0;
+                padding: 70px 0;
             }
 
             .hero {
-                padding: 150px 0 60px;
+                padding: 140px 0 50px;
+            }
+
+            .hero-ctas {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .hero-ctas .btn {
+                width: 100%;
             }
 
             .hero-stats {
-                gap: 22px;
+                gap: 18px 26px;
+            }
+
+            .fan {
+                height: 280px;
+                margin-bottom: 0;
+            }
+
+            .phone {
+                width: 100px;
+                height: 190px;
+            }
+
+            .phone.p1 {
+                transform: rotate(-13deg) translate(-92px, 6px);
+            }
+
+            .phone.p2 {
+                transform: rotate(-5deg) translate(-46px, -12px);
+            }
+
+            .phone.p3 {
+                transform: translateY(-20px) scale(1.04);
+            }
+
+            .phone.p4 {
+                transform: rotate(5deg) translate(46px, -12px);
+            }
+
+            .phone.p5 {
+                transform: rotate(13deg) translate(92px, 6px);
+            }
+
+            @keyframes floatMain {
+
+                0%,
+                100% {
+                    transform: translateY(-20px) scale(1.04)
+                }
+
+                50% {
+                    transform: translateY(-30px) scale(1.04)
+                }
+            }
+
+            .fan-glow {
+                width: 240px;
+                height: 240px;
+            }
+
+            .lock-badge {
+                font-size: 11px;
+                padding: 8px 14px;
+            }
+
+            .section-title {
+                margin-bottom: 14px;
+            }
+
+            .plan {
+                padding: 32px 24px;
+            }
+
+            .plan-price b {
+                font-size: 42px;
+            }
+
+            .testi-card {
+                height: 170px;
+            }
+
+            .niche-chip {
+                padding: 10px 18px;
+                font-size: 13px;
+            }
+
+            .final-cta {
+                padding: 48px 24px;
+            }
+
+            .final-ctas {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .final-ctas .btn {
+                width: 100%;
             }
 
             .foot-top {
                 flex-direction: column;
+                gap: 30px;
+            }
+
+            .foot-cols {
+                gap: 36px;
+            }
+
+            .foot-bottom {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .nav {
+                padding: 8px 8px 8px 14px;
+            }
+
+            .brand {
+                font-size: 13.5px;
+            }
+
+            .nav-cta {
+                padding: 9px 14px;
+                font-size: 12.5px;
+            }
+
+            .hero h1 {
+                font-size: clamp(30px, 8vw, 40px);
+            }
+
+            .hero p.lead {
+                font-size: 16px;
+            }
+
+            .fan {
+                height: 240px;
+            }
+
+            .phone {
+                width: 84px;
+                height: 160px;
             }
         }
 
@@ -1275,7 +1485,23 @@
                 <a href="#faq">FAQ</a>
             </div>
             <a href="#pricing" class="nav-cta">Get Access</a>
+            <button type="button" class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false"
+                aria-controls="navMobile">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round">
+                    <line class="bar bar-top" x1="3" y1="6" x2="21" y2="6"></line>
+                    <line class="bar bar-mid" x1="3" y1="12" x2="21" y2="12"></line>
+                    <line class="bar bar-bot" x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
         </nav>
+        <div class="nav-mobile" id="navMobile">
+            <a href="#how">How it works</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#reviews">Reviews</a>
+            <a href="#faq">FAQ</a>
+            <a href="#pricing" class="btn btn-primary btn-block">Get Access</a>
+        </div>
     </div>
 
     <main id="top">
@@ -1616,6 +1842,46 @@
 
     <script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
     <script>
+        // ---------- mobile nav toggle ----------
+        var navBurger = document.getElementById('navBurger');
+        var navMobile = document.getElementById('navMobile');
+
+        function closeMobileNav() {
+            navMobile.classList.remove('open');
+            navBurger.setAttribute('aria-expanded', 'false');
+            navBurger.setAttribute('aria-label', 'Open menu');
+        }
+
+        function openMobileNav() {
+            navMobile.classList.add('open');
+            navBurger.setAttribute('aria-expanded', 'true');
+            navBurger.setAttribute('aria-label', 'Close menu');
+        }
+
+        navBurger.addEventListener('click', function (e) {
+            e.stopPropagation();
+            var isOpen = navMobile.classList.contains('open');
+            if (isOpen) { closeMobileNav(); } else { openMobileNav(); }
+        });
+
+        navMobile.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', closeMobileNav);
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!navMobile.classList.contains('open')) return;
+            if (navMobile.contains(e.target) || navBurger.contains(e.target)) return;
+            closeMobileNav();
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeMobileNav();
+        });
+
+        window.addEventListener('resize', function () {
+            if (window.innerWidth > 920) closeMobileNav();
+        });
+
         // ---------- Lenis smooth scroll (with reduced-motion fallback) ----------
         const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         let lenis = null;
